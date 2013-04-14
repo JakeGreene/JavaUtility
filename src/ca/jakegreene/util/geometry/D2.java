@@ -7,7 +7,7 @@ import java.util.List;
  * @author jakegreene
  *
  */
-class D2 implements Dimension<D2> {
+public class D2 implements Dimension<D2> {
 	
 	private final double x;
 	private final double y;
