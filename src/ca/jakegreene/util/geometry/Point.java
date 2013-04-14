@@ -68,5 +68,11 @@ public interface Point<D extends Dimension<D>> {
 	public int getNumComponents();
 
 	public double getComponent(int index) throws IndexOutOfBoundsException;
+	
+	@Override
+	public boolean equals(Object o);
+	
+	@Override
+	public int hashCode();
 
 }

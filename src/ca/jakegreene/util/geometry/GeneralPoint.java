@@ -1,7 +1,9 @@
 package ca.jakegreene.util.geometry;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
@@ -133,5 +135,38 @@ public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 	@Override
 	public double distance(Point<D> other) {
 		return Math.sqrt(distanceSquared(other));
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o == null) {
+			return false;
+		}
+		
+		if (! (o instanceof Point)) {
+			return false;
+		}
+		
+		Point other = (Point)o;
+		
+		if (getNumComponents() != other.getNumComponents()) {
+			return false;
+		}
+		
+		for (int index = 0; index < getNumComponents(); ++index) {
+			if (this.getComponent(index) != other.getComponent(index)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	@Override
+	public int hashCode() {
+		List<Double> components = new LinkedList<Double>();
+		for (int index = 0; index < getNumComponents(); ++index) {
+			components.add(getComponent(index));
+		}
+		return Objects.hashCode(components);
 	}
 }

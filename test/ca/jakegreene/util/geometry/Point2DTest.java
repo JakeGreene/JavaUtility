@@ -1,6 +1,11 @@
 package ca.jakegreene.util.geometry;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -135,6 +140,49 @@ public class Point2DTest {
 		assertEquals("Point2D Distance did not change original Y", Y, point.getY(), DELTA);
 		assertEquals("Point2D Distance did not change destination X", destX, destination.getX(), DELTA);
 		assertEquals("Point2D Distance did not change destination Y", destY, destination.getY(), DELTA);
+	}
+	
+	@Test
+	public void testEquality() {
+		Point2D otherPoint = Point2D.new2DPoint(X, Y);
+		assertEquals("Point2D Equals", point, otherPoint);
+	}
+	
+	@Test
+	public void testEqualityDiffType() {
+		Point<D2> otherPoint = Points.new2DPoint(X, Y);
+		assertEquals("Point2D Equals Point<D2>", point, otherPoint);
+	}
+	
+	@Test
+	public void testInequalityNull() {
+		assertFalse("Point2D Equals Not the same as null", point.equals(null));
+	}
+	
+	@Test
+	public void testInequalityBadObject() {
+		assertFalse("Point2D Equals Not the same as other class", point.equals(new Object()));
+	}
+	
+	@Test
+	public void testInequalityBadDimensions() {
+		Point3D diffPoint = Point3D.new3DPoint(X, Y, 0);
+		assertFalse("Point2D Equals Not the same as different dimension", point.equals(diffPoint));
+	}
+	
+	@Test
+	public void testInequalityOneOff() {
+		Point2D diffPoint = Point2D.new2DPoint(X, X);
+		assertFalse("Point2D Equals Not the same as (X, X)", point.equals(diffPoint));
+	}
+	
+	@Test
+	public void testHashCode() {
+		Point2D same = Point2D.new2DPoint(X, Y);
+		Set<Point2D> points = new HashSet<Point2D>();
+		points.add(point);
+		
+		assertTrue("Point2D HashCode other points with same (X, Y)", points.contains(same));
 	}
 
 }
