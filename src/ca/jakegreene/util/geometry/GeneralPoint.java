@@ -19,7 +19,7 @@ public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 	public Point<D> add(double scalar) {
 		List<Double> components = Lists.newArrayListWithCapacity(getNumComponents());
 		for (int index = 0; index < getNumComponents(); ++index) {
-			double component = components.get(index);
+			double component = getComponent(index);
 			components.add(index, component + scalar);
 		}
 		return create(components);
@@ -32,7 +32,7 @@ public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 	public Point<D> add(Point<D> other) {
 		List<Double> components = Lists.newArrayListWithCapacity(getNumComponents());
 		for (int index = 0; index < getNumComponents(); ++index) {
-			double thisComponent = components.get(index);
+			double thisComponent = this.getComponent(index);
 			double otherComponent = other.getComponent(index);
 			components.add(index, thisComponent + otherComponent);
 		}
@@ -68,7 +68,7 @@ public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 	public Point<D> multiply(double scalar) {
 		List<Double> components = Lists.newArrayListWithCapacity(getNumComponents());
 		for (int index = 0; index < getNumComponents(); ++index) {
-			double component = components.get(index);
+			double component = getComponent(index);
 			components.add(component * scalar);
 		}
 		return create(components);
