@@ -50,6 +50,20 @@ public interface Point<D extends Dimension<D>> {
 	 * @return
 	 */
 	public Vector<D> difference(Point<D> other);
+	
+	/**
+	 * Find the squared Euclidean distance from <code>this</code> to <code>other</code>.
+	 * @param other
+	 * @return
+	 */
+	public double distanceSquared(Point<D> other);
+	
+	/**
+	 * Find the Euclidean distance from <code>this</code> to <code>other</code>
+	 * @param other
+	 * @return
+	 */
+	public double distance(Point<D> other);
 
 	public int getNumComponents();
 

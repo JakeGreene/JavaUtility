@@ -100,5 +100,41 @@ public class Point2DTest {
 		assertEquals("Point2D Difference to X did not change source", oX, source.getX(), DELTA);
 		assertEquals("Point2D Difference to Y did not change source", oY, source.getY(), DELTA);
 	}
+	
+	@Test
+	public void testDistance() {
+		double destX = 123456.789;
+		double destY = -591.374;
+		Point2D destination = Point2D.new2DPoint(destX, destY);
+		double distance = point.distance(destination);
+		
+		double deltaX = destX - X;
+		double deltaY = destY - Y;
+		double expectedDistance = Math.sqrt(deltaX*deltaX + deltaY*deltaY);
+		
+		assertEquals("Point2D Distance", expectedDistance, distance, DELTA);
+		assertEquals("Point2D Distance did not change original X", X, point.getX(), DELTA);
+		assertEquals("Point2D Distance did not change original Y", Y, point.getY(), DELTA);
+		assertEquals("Point2D Distance did not change destination X", destX, destination.getX(), DELTA);
+		assertEquals("Point2D Distance did not change destination Y", destY, destination.getY(), DELTA);
+	}
+	
+	@Test
+	public void testDistanceSquared() {
+		double destX = 123456.789;
+		double destY = -591.374;
+		Point2D destination = Point2D.new2DPoint(destX, destY);
+		double distance = point.distanceSquared(destination);
+		
+		double deltaX = destX - X;
+		double deltaY = destY - Y;
+		double expectedDistance = deltaX*deltaX + deltaY*deltaY;
+		
+		assertEquals("Point2D Distance", expectedDistance, distance, DELTA);
+		assertEquals("Point2D Distance did not change original X", X, point.getX(), DELTA);
+		assertEquals("Point2D Distance did not change original Y", Y, point.getY(), DELTA);
+		assertEquals("Point2D Distance did not change destination X", destX, destination.getX(), DELTA);
+		assertEquals("Point2D Distance did not change destination Y", destY, destination.getY(), DELTA);
+	}
 
 }

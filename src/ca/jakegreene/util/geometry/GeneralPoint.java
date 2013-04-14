@@ -119,4 +119,19 @@ public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 		msg += getComponent(components - 1) + ">";
 		return msg;
 	}
+	
+	@Override
+	public double distanceSquared(Point<D> other) {
+		double squareSum = 0;
+		for (int index = 0; index < getNumComponents(); ++index) {
+			double delta = other.getComponent(index) - this.getComponent(index);
+			squareSum += delta*delta;
+		}
+		return squareSum;
+	}
+
+	@Override
+	public double distance(Point<D> other) {
+		return Math.sqrt(distanceSquared(other));
+	}
 }
