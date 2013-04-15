@@ -13,7 +13,7 @@ public interface Vector<D extends Dimension<D>> {
 	 * creating a new Vector such that
 	 * e_i = this_i + scalar
 	 */
-	public Vector<D> plus(double scalar);
+	public Vector<D> add(double scalar);
 
 	/**
 	 * Add the components of <code>other</code> to this
@@ -23,7 +23,7 @@ public interface Vector<D extends Dimension<D>> {
 	 * @return
 	 * @throws DimensionalMixException
 	 */
-	public Vector<D> plus(Vector<D> other);
+	public Vector<D> add(Vector<D> other);
 
 	/**
 	 * Subtract the scalar value <code>scalar</code> from this Vector
@@ -32,7 +32,7 @@ public interface Vector<D extends Dimension<D>> {
 	 * @param scalar
 	 * @return
 	 */
-	public Vector<D> minus(double scalar);
+	public Vector<D> subtract(double scalar);
 
 	/**
 	 * Add the components of <code>other</code> to this
@@ -41,7 +41,7 @@ public interface Vector<D extends Dimension<D>> {
 	 * @param other
 	 * @return
 	 */
-	public Vector<D> minus(Vector<D> other);
+	public Vector<D> subtract(Vector<D> other);
 
 	/**
 	 * Multiply each component of this Vector

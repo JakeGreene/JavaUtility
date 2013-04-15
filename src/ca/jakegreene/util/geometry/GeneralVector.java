@@ -1,7 +1,9 @@
 package ca.jakegreene.util.geometry;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 public class GeneralVector<D extends Dimension<D>> implements Vector<D> {
@@ -17,7 +19,7 @@ public class GeneralVector<D extends Dimension<D>> implements Vector<D> {
 	 * @see ca.jakegreene.util.geometry.Vector#plus(double)
 	 */
 	@Override
-	public Vector<D> plus(double scalar) {
+	public Vector<D> add(double scalar) {
 		List<Double> components = Lists.newArrayListWithCapacity(getNumComponents());
 		for (int index = 0; index < getNumComponents(); ++index) {
 			double component = getComponent(index);
@@ -30,7 +32,7 @@ public class GeneralVector<D extends Dimension<D>> implements Vector<D> {
 	 * @see ca.jakegreene.util.geometry.Vector#plus(V)
 	 */
 	@Override
-	public Vector<D> plus(Vector<D> other) {
+	public Vector<D> add(Vector<D> other) {
 		List<Double> components = Lists.newArrayListWithCapacity(getNumComponents());
 		for (int index = 0; index < getNumComponents(); ++index) {
 			double myComponent = this.getComponent(index);
@@ -44,16 +46,16 @@ public class GeneralVector<D extends Dimension<D>> implements Vector<D> {
 	 * @see ca.jakegreene.util.geometry.Vector#minus(double)
 	 */
 	@Override
-	public Vector<D> minus(double scalar) {
-		return plus(-scalar);
+	public Vector<D> subtract(double scalar) {
+		return add(-scalar);
 	}
 	
 	/* (non-Javadoc)
 	 * @see ca.jakegreene.util.geometry.Vector#minus(V)
 	 */
 	@Override
-	public Vector<D> minus(Vector<D> other) {
-		return plus(other.multiply(-1));
+	public Vector<D> subtract(Vector<D> other) {
+		return add(other.multiply(-1));
 	}
 	
 	/* (non-Javadoc)
@@ -132,5 +134,38 @@ public class GeneralVector<D extends Dimension<D>> implements Vector<D> {
 	@Override
 	public double getComponent(int index) throws IndexOutOfBoundsException {
 		return dimension.getComponent(index);
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o == null) {
+			return false;
+		}
+		
+		if (! (o instanceof Vector)) {
+			return false;
+		}
+		
+		Vector other = (Vector)o;
+		
+		if (getNumComponents() != other.getNumComponents()) {
+			return false;
+		}
+		
+		for (int index = 0; index < getNumComponents(); ++index) {
+			if (this.getComponent(index) != other.getComponent(index)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	@Override
+	public int hashCode() {
+		List<Double> components = new LinkedList<Double>();
+		for (int index = 0; index < getNumComponents(); ++index) {
+			components.add(getComponent(index));
+		}
+		return Objects.hashCode(components);
 	}
 }
