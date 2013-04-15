@@ -3,6 +3,8 @@ package ca.jakegreene.util.geometry;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.junit.Test;
 
 public class Vector3DTest extends VectorTest<D3> {
@@ -14,6 +16,22 @@ public class Vector3DTest extends VectorTest<D3> {
 	
 	public Vector3DTest() {
 		super(vector, 0.1);
+	}
+	
+	@Test
+	public void testCross() {
+		Vector<D3> other = createTestVector();
+		List<Double> otherComponents = other.getComponents();
+		Vector3D cross = vector.cross(other);
+		
+		String test = "Vector3D Cross Product";
+		double expectedX = (vector.getY() * other.getComponent(2)) - (vector.getZ() * other.getComponent(1));
+		double expectedY = (vector.getZ() * other.getComponent(0)) - (vector.getX() * other.getComponent(2));
+		double expectedZ = (vector.getX() * other.getComponent(1)) - (vector.getY() * other.getComponent(0));
+		Vector3D expected = Vector3D.new3DVector(expectedX, expectedY, expectedZ);
+		assertTrue(test, cross.equals(expected));
+		checkUnchanged(vector, components, test);
+		checkUnchanged(other, otherComponents, test);
 	}
 	
 	@Test

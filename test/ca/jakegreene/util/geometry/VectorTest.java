@@ -10,9 +10,9 @@ import static org.junit.Assert.*;
 
 public abstract class VectorTest<D extends Dimension<D>> {
 	
-	private final Vector<D> vector;
-	private final List<Double> components;
-	private final double DELTA;
+	protected final Vector<D> vector;
+	protected final List<Double> components;
+	protected final double DELTA;
 	
 	public VectorTest(Vector<D> vector, double delta) {
 		this.vector = vector;
@@ -23,7 +23,7 @@ public abstract class VectorTest<D extends Dimension<D>> {
 		}
 	}
 	
-	private void checkUnchanged(Vector<D> vector, List<Double> components, String test) {
+	protected void checkUnchanged(Vector<D> vector, List<Double> components, String test) {
 		for (int index = 0; index < components.size(); ++index) {
 			assertEquals(test + ". Component "+ index +" unchanged", components.get(index), vector.getComponent(index), DELTA);
 		}
@@ -176,17 +176,17 @@ public abstract class VectorTest<D extends Dimension<D>> {
 	public void testEquality() {
 		Vector<D> same = vector.copy();
 		
-		assertTrue("Vector2D Equality", vector.equals(same));
+		assertTrue("Vector Equality", vector.equals(same));
 	}
 	
 	@Test
 	public void testInequalityNull() {
-		assertFalse("Vector2D Not Equal to null", vector.equals(null));
+		assertFalse("Vector Not Equal to null", vector.equals(null));
 	}
 	
 	@Test
 	public void testInequalityNonVector() {
-		assertFalse("Vector2D Not Equal to Non-Vector", vector.equals(new Object()));
+		assertFalse("Vector Not Equal to Non-Vector", vector.equals(new Object()));
 	}
 	
 	@Test
@@ -195,7 +195,14 @@ public abstract class VectorTest<D extends Dimension<D>> {
 		vectors.add(vector);
 		Vector<D> same = vector.copy();
 		
-		assertTrue("Vector2D HashCode hash(<X, Y>) == hash(<X, Y>)", vectors.contains(same));
+		assertTrue("Vector HashCode hash(v1) == hash(copy(v1))", vectors.contains(same));
+	}
+	
+	@Test
+	public void testCopy() {
+		Vector<D> copy = vector.copy();
+		assertTrue("Vector Copy", vector.equals(copy));
+		assertTrue("Vector Copy not the same", vector != copy);
 	}
 
 }
