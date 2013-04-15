@@ -136,6 +136,7 @@ public class GeneralVector<D extends Dimension<D>> implements Vector<D> {
 		return dimension.getComponent(index);
 	}
 	
+	@SuppressWarnings("rawtypes")
 	@Override
 	public boolean equals(Object o) {
 		if (o == null) {
@@ -167,5 +168,17 @@ public class GeneralVector<D extends Dimension<D>> implements Vector<D> {
 			components.add(getComponent(index));
 		}
 		return Objects.hashCode(components);
+	}
+
+
+	@Override
+	public List<Double> getComponents() {
+		return dimension.getComponents();
+	}
+
+
+	@Override
+	public Vector<D> copy() {
+		return new GeneralVector<D>(dimension);
 	}
 }

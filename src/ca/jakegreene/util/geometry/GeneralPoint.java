@@ -137,6 +137,7 @@ public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 		return Math.sqrt(distanceSquared(other));
 	}
 	
+	@SuppressWarnings("rawtypes")
 	@Override
 	public boolean equals(Object o) {
 		if (o == null) {
@@ -146,6 +147,7 @@ public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 		if (! (o instanceof Point)) {
 			return false;
 		}
+		
 		
 		Point other = (Point)o;
 		

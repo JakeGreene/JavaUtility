@@ -1,5 +1,7 @@
 package ca.jakegreene.util.geometry;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -42,6 +44,11 @@ public class D3 implements Dimension<D3> {
 	@Override
 	public D3 create(List<Double> components) {
 		return new D3(components.get(0), components.get(1), components.get(2));
+	}
+
+	@Override
+	public List<Double> getComponents() {
+		return new ArrayList<Double>(Arrays.asList(x, y, z));
 	}
 
 }

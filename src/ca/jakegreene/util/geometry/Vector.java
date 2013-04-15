@@ -1,5 +1,7 @@
 package ca.jakegreene.util.geometry;
 
+import java.util.List;
+
 /**
  * 
  * @author jakegreene
@@ -73,5 +75,14 @@ public interface Vector<D extends Dimension<D>> {
 	public int getNumComponents();
 
 	public double getComponent(int index) throws IndexOutOfBoundsException;
+	
+	public List<Double> getComponents();
+	
+	/**
+	 * Create an exact copy of this Vector such that
+	 * this.equals(copy) == true
+	 * @return
+	 */
+	public Vector<D> copy();
 
 }

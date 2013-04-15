@@ -19,6 +19,15 @@ public interface Dimension<D extends Dimension<D>> {
 	public double getComponent(int index) throws IndexOutOfBoundsException;
 	
 	/**
+	 * Get all of the components within this dimension.
+	 * Components are ordered so that the lowest indexed
+	 * component is the lowest order variable.
+	 * ( 0 -> X, 1 -> Y, 2 -> Z...) 
+	 * @return
+	 */
+	public List<Double> getComponents();
+	
+	/**
 	 * Create a Dimension instance of the same dimensionality with the given components
 	 * @param components
 	 * @return
