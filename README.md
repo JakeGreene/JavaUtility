@@ -47,5 +47,5 @@ Separate classes exist that conform to these interfaces but also provide dimensi
 
 while utility classes exist to work with the generic Vector and Point classes
 
-	Vector<D2> vector = Vectors.new2DVector(x, y);
-	Vector<D2> cross = Vectors.cross(vector, otherVector);
+	Vector<D3> vector = Vectors.new3DVector(x, y, z);
+	Vector<D3> cross = Vectors.cross(vector, otherVector);
