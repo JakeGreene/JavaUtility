@@ -1,12 +1,14 @@
 package ca.jakegreene.util.geometry;
 
-import java.util.ArrayList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public abstract class VectorTest<D extends Dimension<D>> {
 	
@@ -17,10 +19,7 @@ public abstract class VectorTest<D extends Dimension<D>> {
 	public VectorTest(Vector<D> vector, double delta) {
 		this.vector = vector;
 		this.DELTA = delta;
-		components = new ArrayList<Double>();
-		for (int index = 0; index < vector.size(); ++index) {
-			components.add(index, vector.get(index));
-		}
+		components = vector.components();
 	}
 	
 	protected void checkUnchanged(Vector<D> vector, List<Double> components, String test) {
