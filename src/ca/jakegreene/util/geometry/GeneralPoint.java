@@ -53,7 +53,7 @@ public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 	 * @see ca.jakegreene.util.geometry.Point#subtract(ca.jakegreene.util.geometry.Point)
 	 */
 	@Override
-	public Point<D> subtract(Point<D> other) {
+	public Point<D> subtract(Vector<D> other) {
 		List<Double> components = Lists.newArrayListWithCapacity(size());
 		for (int index = 0; index < size(); ++index) {
 			double thisComponent = this.get(index);

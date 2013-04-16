@@ -29,12 +29,12 @@ public interface Point<D extends Dimension<D>> {
 	public Point<D> subtract(double scalar);
 
 	/**
-	 * Subtract this Point and <code>other</code> creating a new Point such that
+	 * Subtract this Point by <code>other</code> creating a new Point such that
 	 * e_i = this_i - other_i
 	 * @param other
 	 * @return
 	 */
-	public Point<D> subtract(Point<D> other);
+	public Point<D> subtract(Vector<D> other);
 
 	/**
 	 * Multiply this Point with <code>scalar</code> creating a new Point such that
