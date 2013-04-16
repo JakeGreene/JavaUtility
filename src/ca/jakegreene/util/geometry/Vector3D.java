@@ -60,4 +60,19 @@ public class Vector3D extends GeneralVector<D3> {
 		double zPrime = (x1 * y2) - (y1 * x2);
 		return new Vector3D(xPrime, yPrime, zPrime);
 	}
+	
+	public static Vector3D newVector() {
+		return newVector(0, 0, 0);
+	}
+	
+	public static Vector3D newVector(double x, double y, double z) {
+		return new Vector3D(x, y, z);
+	}
+	
+	public static Vector3D newVectorFromAngles(double length, double radIncline, double radAzimuth) {
+		double x = length * Math.sin(radIncline) * Math.cos(radAzimuth);
+		double y = length * Math.sin(radIncline) * Math.sin(radAzimuth);
+		double z = length * Math.cos(radIncline);
+		return new Vector3D(x, y, z);
+	}
 }

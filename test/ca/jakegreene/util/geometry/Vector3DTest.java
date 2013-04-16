@@ -50,7 +50,7 @@ public class Vector3DTest extends VectorTest<D3> {
 	
 	@Test 
 	public void testInequalityDiffDimensionality() {
-		Vector2D notSame = Vector2D.new2DVector(X, Y);
+		Vector2D notSame = Vector2D.newVector(X, Y);
 		assertFalse("Vector3D Not Equal to 2D Vector (X, Y)", vector.equals(notSame));
 	}
 

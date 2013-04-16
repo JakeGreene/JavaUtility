@@ -21,7 +21,7 @@ public final class Vectors {
 		return new GeneralVector<D3>(d);
 	}
 	
-	public static Vector<D3> create3dVectorWithAngles(double length, double incline, double azimuth) {
+	public static Vector<D3> create3dVectorFromAngles(double length, double incline, double azimuth) {
 		double x = length * Math.sin(incline) * Math.cos(azimuth);
 		double y = length * Math.sin(incline) * Math.sin(azimuth);
 		double z = length * Math.cos(incline);

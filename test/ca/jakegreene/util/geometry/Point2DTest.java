@@ -12,7 +12,7 @@ public class Point2DTest extends PointTest<D2> {
 	private static final double DELTA = 0.1;
 	
 	public Point2DTest() {
-		super(Point2D.new2DPoint(X, Y), DELTA);
+		super(Point2D.newPoint(X, Y), DELTA);
 	}
 	
 	@Test
@@ -23,24 +23,24 @@ public class Point2DTest extends PointTest<D2> {
 	
 	@Test
 	public void testInequalityBadDimensions() {
-		Point3D diffPoint = Point3D.new3DPoint(X, Y, 0);
+		Point3D diffPoint = Point3D.newPoint(X, Y, 0);
 		assertFalse("Point2D Equals Not the same as different dimension", point.equals(diffPoint));
 	}
 	
 	@Test
 	public void testInequalityOneOff() {
-		Point2D diffPoint = Point2D.new2DPoint(X, X);
+		Point2D diffPoint = Point2D.newPoint(X, X);
 		assertFalse("Point2D Equals Not the same as (X, X)", point.equals(diffPoint));
 	}
 
 	@Override
 	protected Point<D2> createTestPoint() {
-		return Point2D.new2DPoint((X+1)*5, (Y+1)*7);
+		return Point2D.newPoint((X+1)*5, (Y+1)*7);
 	}
 
 	@Override
 	protected Vector<D2> createTestVector() {
-		return Vector2D.new2DVector(2.3, 3.1);
+		return Vector2D.newVector(2.3, 3.1);
 	}
 
 }

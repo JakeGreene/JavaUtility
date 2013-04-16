@@ -26,11 +26,11 @@ public class Point3D extends GeneralPoint<D3> {
 		return get(2);
 	}
 	
-	public static Point3D new3DPoint() {
+	public static Point3D newPoint() {
 		return new Point3D();
 	}
 	
-	public static Point3D new3DPoint(double x, double y, double z) {
+	public static Point3D newPoint(double x, double y, double z) {
 		return new Point3D(x, y, z);
 	}
 }

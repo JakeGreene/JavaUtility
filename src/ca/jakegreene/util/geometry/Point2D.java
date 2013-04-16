@@ -22,11 +22,11 @@ public class Point2D extends GeneralPoint<D2> {
 		return get(1);
 	}
 	
-	public static Point2D new2DPoint() {
+	public static Point2D newPoint() {
 		return new Point2D();
 	}
 	
-	public static Point2D new2DPoint(double x, double y) {
+	public static Point2D newPoint(double x, double y) {
 		return new Point2D(x, y);
 	}
 	

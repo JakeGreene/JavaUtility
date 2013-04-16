@@ -26,7 +26,7 @@ public class Vector2DTest extends VectorTest<D2> {
 	@Test
 	public void testInequalityOneOff() {
 		// Assumes X != Y
-		Vector2D notSame = Vector2D.new2DVector(X, X);
+		Vector2D notSame = Vector2D.newVector(X, X);
 		assertFalse("Vector2D Not Equal to unequal Vector", vector.equals(notSame));
 	}
 	

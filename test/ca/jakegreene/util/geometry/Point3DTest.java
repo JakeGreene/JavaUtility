@@ -33,13 +33,13 @@ public class Point3DTest extends PointTest<D3> {
 	
 	@Test
 	public void testInequalityBadDimensions() {
-		Point<D2> diffPoint = Point2D.new2DPoint(X, Y);
+		Point<D2> diffPoint = Point2D.newPoint(X, Y);
 		assertFalse("Point2D Equals Not the same as different dimension", point.equals(diffPoint));
 	}
 	
 	@Test
 	public void testInequalityOneOff() {
-		Point3D diffPoint = Point3D.new3DPoint(X, Y, (Z+1));
+		Point3D diffPoint = Point3D.newPoint(X, Y, (Z+1));
 		assertFalse("Point2D Equals Not the same as (X, Y, Z')", point.equals(diffPoint));
 	}
 

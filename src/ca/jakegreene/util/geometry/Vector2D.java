@@ -26,15 +26,15 @@ public class Vector2D extends GeneralVector<D2> {
 		return Math.atan2(getY(), getX());
 	}
 	
-	public static Vector2D new2DVector() {
+	public static Vector2D newVector() {
 		return new Vector2D();
 	}
 	
-	public static Vector2D new2DVector(double x, double y) {
+	public static Vector2D newVector(double x, double y) {
 		return new Vector2D(x, y);
 	}
 	
-	public static Vector2D new2DVectorFromAngle(double length, double radAngle) {
+	public static Vector2D newVectorFromAngle(double length, double radAngle) {
 		double x = length * Math.cos(radAngle);
 		double y = length * Math.sin(radAngle);
 		return new Vector2D(x, y);
