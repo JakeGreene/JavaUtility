@@ -72,11 +72,11 @@ public interface Vector<D extends Dimension<D>> {
 	 */
 	public Vector<D> normalize();
 
-	public int getNumComponents();
+	public int size();
 
-	public double getComponent(int index) throws IndexOutOfBoundsException;
+	public double get(int index) throws IndexOutOfBoundsException;
 	
-	public List<Double> getComponents();
+	public List<Double> components();
 	
 	/**
 	 * Create an exact copy of this Vector such that

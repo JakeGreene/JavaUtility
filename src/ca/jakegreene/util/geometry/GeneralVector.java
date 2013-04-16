@@ -20,9 +20,9 @@ public class GeneralVector<D extends Dimension<D>> implements Vector<D> {
 	 */
 	@Override
 	public Vector<D> add(double scalar) {
-		List<Double> components = Lists.newArrayListWithCapacity(getNumComponents());
-		for (int index = 0; index < getNumComponents(); ++index) {
-			double component = getComponent(index);
+		List<Double> components = Lists.newArrayListWithCapacity(size());
+		for (int index = 0; index < size(); ++index) {
+			double component = get(index);
 			components.add(index, component + scalar);
 		}
 		return create(components);
@@ -33,10 +33,10 @@ public class GeneralVector<D extends Dimension<D>> implements Vector<D> {
 	 */
 	@Override
 	public Vector<D> add(Vector<D> other) {
-		List<Double> components = Lists.newArrayListWithCapacity(getNumComponents());
-		for (int index = 0; index < getNumComponents(); ++index) {
-			double myComponent = this.getComponent(index);
-			double otherComponent = other.getComponent(index);
+		List<Double> components = Lists.newArrayListWithCapacity(size());
+		for (int index = 0; index < size(); ++index) {
+			double myComponent = this.get(index);
+			double otherComponent = other.get(index);
 			components.add(index, myComponent + otherComponent);
 		}
 		return create(components);
@@ -63,9 +63,9 @@ public class GeneralVector<D extends Dimension<D>> implements Vector<D> {
 	 */
     @Override
 	public Vector<D> multiply(double scalar) {
-    	List<Double> components = Lists.newArrayListWithCapacity(getNumComponents());
-    	for (int index = 0; index < getNumComponents(); ++index) {
-    		double component = getComponent(index) * scalar;
+    	List<Double> components = Lists.newArrayListWithCapacity(size());
+    	for (int index = 0; index < size(); ++index) {
+    		double component = get(index) * scalar;
     		components.add(index, component);
     	}
     	return create(components);
@@ -77,9 +77,9 @@ public class GeneralVector<D extends Dimension<D>> implements Vector<D> {
 	@Override
 	public double dot(Vector<D> other) {
 		double dotProduct = 0;
-		for (int index = 0; index < getNumComponents(); ++index) {
-			double thisComponent = this.getComponent(index);
-			double otherComponent = other.getComponent(index);
+		for (int index = 0; index < size(); ++index) {
+			double thisComponent = this.get(index);
+			double otherComponent = other.get(index);
 			dotProduct += thisComponent*otherComponent;
 		}
 		return dotProduct;
@@ -91,8 +91,8 @@ public class GeneralVector<D extends Dimension<D>> implements Vector<D> {
 	@Override
 	public double magnitudeSquared() {
 		double magSquared = 0;
-		for (int index = 0; index < getNumComponents(); ++index) {
-			double component = getComponent(index);
+		for (int index = 0; index < size(); ++index) {
+			double component = get(index);
 			magSquared += component*component;
 		}
 		return magSquared;
@@ -111,10 +111,10 @@ public class GeneralVector<D extends Dimension<D>> implements Vector<D> {
 	 */
 	@Override
 	public Vector<D> normalize() {
-		List<Double> components = Lists.newArrayListWithCapacity(getNumComponents());
+		List<Double> components = Lists.newArrayListWithCapacity(size());
 		double magnitude = magnitude();
-		for (int index = 0; index < getNumComponents(); ++index) {
-			double component = getComponent(index);
+		for (int index = 0; index < size(); ++index) {
+			double component = get(index);
 			components.add(index, component / magnitude);
 		}
 		return create(components);
@@ -126,13 +126,13 @@ public class GeneralVector<D extends Dimension<D>> implements Vector<D> {
 
 
 	@Override
-	public int getNumComponents() {
+	public int size() {
 		return dimension.size();
 	}
 
 
 	@Override
-	public double getComponent(int index) throws IndexOutOfBoundsException {
+	public double get(int index) throws IndexOutOfBoundsException {
 		return dimension.getComponent(index);
 	}
 	
@@ -149,12 +149,12 @@ public class GeneralVector<D extends Dimension<D>> implements Vector<D> {
 		
 		Vector other = (Vector)o;
 		
-		if (getNumComponents() != other.getNumComponents()) {
+		if (size() != other.size()) {
 			return false;
 		}
 		
-		for (int index = 0; index < getNumComponents(); ++index) {
-			if (this.getComponent(index) != other.getComponent(index)) {
+		for (int index = 0; index < size(); ++index) {
+			if (this.get(index) != other.get(index)) {
 				return false;
 			}
 		}
@@ -164,15 +164,15 @@ public class GeneralVector<D extends Dimension<D>> implements Vector<D> {
 	@Override
 	public int hashCode() {
 		List<Double> components = new LinkedList<Double>();
-		for (int index = 0; index < getNumComponents(); ++index) {
-			components.add(getComponent(index));
+		for (int index = 0; index < size(); ++index) {
+			components.add(get(index));
 		}
 		return Objects.hashCode(components);
 	}
 
 
 	@Override
-	public List<Double> getComponents() {
+	public List<Double> components() {
 		return dimension.getComponents();
 	}
 

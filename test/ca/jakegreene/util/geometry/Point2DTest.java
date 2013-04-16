@@ -98,8 +98,8 @@ public class Point2DTest {
 		Point2D source = Point2D.new2DPoint(oX, oY);
 		Vector<D2> v = point.difference(source);
 		
-		assertEquals("Point2D Difference to X", X-oX, v.getComponent(0), DELTA);
-		assertEquals("Point2D Difference to Y", Y-oY, v.getComponent(1), DELTA);
+		assertEquals("Point2D Difference to X", X-oX, v.get(0), DELTA);
+		assertEquals("Point2D Difference to Y", Y-oY, v.get(1), DELTA);
 		assertEquals("Point2D Difference to X did not change original", X, point.getX(), DELTA);
 		assertEquals("Point2D Difference to Y did not change original", Y, point.getY(), DELTA);
 		assertEquals("Point2D Difference to X did not change source", oX, source.getX(), DELTA);

@@ -18,21 +18,21 @@ public abstract class VectorTest<D extends Dimension<D>> {
 		this.vector = vector;
 		this.DELTA = delta;
 		components = new ArrayList<Double>();
-		for (int index = 0; index < vector.getNumComponents(); ++index) {
-			components.add(index, vector.getComponent(index));
+		for (int index = 0; index < vector.size(); ++index) {
+			components.add(index, vector.get(index));
 		}
 	}
 	
 	protected void checkUnchanged(Vector<D> vector, List<Double> components, String test) {
 		for (int index = 0; index < components.size(); ++index) {
-			assertEquals(test + ". Component "+ index +" unchanged", components.get(index), vector.getComponent(index), DELTA);
+			assertEquals(test + ". Component "+ index +" unchanged", components.get(index), vector.get(index), DELTA);
 		}
 	}
 	
 	private void checkShifted(Vector<D> shifted, List<Double> originalComponents, double scalar, String test) {
 		for (int index = 0; index < originalComponents.size(); ++index) {
 			assertEquals(test + ". Components "+ index +" shifted by "+scalar,  originalComponents.get(index) + scalar, 
-																				shifted.getComponent(index), 
+																				shifted.get(index), 
 																				DELTA);
 		}
 	}
@@ -40,7 +40,7 @@ public abstract class VectorTest<D extends Dimension<D>> {
 	private void checkShifted(Vector<D> shifted, List<Double> original, List<Double> scalars, String test) {
 		for (int index = 0; index < original.size(); ++index) {
 			assertEquals(test + ". Components "+ index +" shifted by "+scalars.get(index),  original.get(index) + scalars.get(index), 
-																				shifted.getComponent(index), 
+																				shifted.get(index), 
 																				DELTA);
 		}
 	}
@@ -60,7 +60,7 @@ public abstract class VectorTest<D extends Dimension<D>> {
 	@Test
 	public void testAddVector() {
 		Vector<D> shifter = createTestVector();
-		List<Double> scalars = shifter.getComponents();
+		List<Double> scalars = shifter.components();
 		Vector<D> shifted = vector.add(shifter);
 		
 		String test = "Vector Add Vector";
@@ -82,10 +82,10 @@ public abstract class VectorTest<D extends Dimension<D>> {
 	@Test
 	public void testSubVector() {
 		Vector<D> shifter = createTestVector();
-		List<Double> shiftComponents = shifter.getComponents();
+		List<Double> shiftComponents = shifter.components();
 		Vector<D> shifted = vector.subtract(shifter);
 		
-		List<Double>  scalars = shifter.getComponents();
+		List<Double>  scalars = shifter.components();
 		for (int i = 0; i < scalars.size(); ++i) {
 			scalars.set(i, scalars.get(i) * -1);
 		}
@@ -102,9 +102,9 @@ public abstract class VectorTest<D extends Dimension<D>> {
 		Vector<D> scaled = vector.multiply(scalar);
 		
 		String test = "Vector Multiply Scalar";
-		for (int index = 0; index < scaled.getNumComponents(); ++index) {
-			assertEquals(test +". Component "+ index,   vector.getComponent(index) * scalar, 
-																		scaled.getComponent(index), 
+		for (int index = 0; index < scaled.size(); ++index) {
+			assertEquals(test +". Component "+ index,   vector.get(index) * scalar, 
+																		scaled.get(index), 
 																		DELTA);
 		}
 
@@ -114,12 +114,12 @@ public abstract class VectorTest<D extends Dimension<D>> {
 	@Test
 	public void testDot() {
 		Vector<D> other = createTestVector();
-		List<Double> otherComponents = other.getComponents();
+		List<Double> otherComponents = other.components();
 		double dotProduct = vector.dot(other);
 		
 		double dotExpected = 0;
-		for (int index = 0; index < vector.getNumComponents(); ++index) {
-			dotExpected += (vector.getComponent(index) * other.getComponent(index));
+		for (int index = 0; index < vector.size(); ++index) {
+			dotExpected += (vector.get(index) * other.get(index));
 		}
 		
 		String test = "Vector Dot";
@@ -133,8 +133,8 @@ public abstract class VectorTest<D extends Dimension<D>> {
 		double magSquared = vector.magnitudeSquared();
 		
 		double expected = 0;
-		for (int index = 0; index < vector.getNumComponents(); ++index) {
-			double comp = vector.getComponent(index);
+		for (int index = 0; index < vector.size(); ++index) {
+			double comp = vector.get(index);
 			expected += comp*comp;
 		}
 		
@@ -148,8 +148,8 @@ public abstract class VectorTest<D extends Dimension<D>> {
 		double magnitude = vector.magnitude();
 		
 		double expected = 0;
-		for (int index = 0; index < vector.getNumComponents(); ++index) {
-			double comp = vector.getComponent(index);
+		for (int index = 0; index < vector.size(); ++index) {
+			double comp = vector.get(index);
 			expected += comp*comp;
 		}
 		expected = Math.sqrt(expected);
@@ -165,9 +165,9 @@ public abstract class VectorTest<D extends Dimension<D>> {
 		
 		double magnitude = vector.magnitude();		
 		String test = "Vector Normalize";
-		for (int index = 0; index < vector.getNumComponents(); ++index) {
-			double expected = vector.getComponent(index) / magnitude;
-			assertEquals(test, expected, normal.getComponent(index), DELTA);
+		for (int index = 0; index < vector.size(); ++index) {
+			double expected = vector.get(index) / magnitude;
+			assertEquals(test, expected, normal.get(index), DELTA);
 		}
 		checkUnchanged(vector, components, test);
 	}

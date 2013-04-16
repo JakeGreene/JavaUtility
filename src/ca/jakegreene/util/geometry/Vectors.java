@@ -29,7 +29,7 @@ public final class Vectors {
 	}
 	
 	public static double getAngle(Vector<D2> vector) {
-		return Math.atan2(vector.getComponent(1), vector.getComponent(2));
+		return Math.atan2(vector.get(1), vector.get(2));
 	}
 	
 	public static double getIncline(Vector<D3> vector) {
@@ -37,17 +37,17 @@ public final class Vectors {
 		if (magnitude == 0) {
 			return Double.NaN;
 		}
-		return Math.acos(vector.getComponent(2) / magnitude);
+		return Math.acos(vector.get(2) / magnitude);
 	}
 	
 	public static double getAzimuth(Vector<D3> vector) {
-		return Math.atan2(vector.getComponent(1), vector.getComponent(0));
+		return Math.atan2(vector.get(1), vector.get(0));
 	}
 	
 	public static Vector<D3> cross(Vector<D3> v1, Vector<D3> v2) {
-		double x1 = v1.getComponent(0); double x2 = v2.getComponent(0);
-		double y1 = v1.getComponent(1); double y2 = v2.getComponent(1);
-		double z1 = v1.getComponent(2); double z2 = v2.getComponent(2);
+		double x1 = v1.get(0); double x2 = v2.get(0);
+		double y1 = v1.get(1); double y2 = v2.get(1);
+		double z1 = v1.get(2); double z2 = v2.get(2);
 		
 		double xPrime = (y1 * z2) - (z1 * y2);
 		double yPrime = (z1 * x2) - (x1 * z2);

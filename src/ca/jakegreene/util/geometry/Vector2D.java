@@ -15,11 +15,11 @@ public class Vector2D extends GeneralVector<D2> {
 	}
 	
 	public double getX() {
-		return getComponent(0);
+		return get(0);
 	}
 	
 	public double getY() {
-		return getComponent(1);
+		return get(1);
 	}
 	
 	public double getAngle() {

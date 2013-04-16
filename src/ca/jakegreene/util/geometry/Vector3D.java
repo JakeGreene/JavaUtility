@@ -39,21 +39,21 @@ public class Vector3D extends GeneralVector<D3> {
 	}
 	
 	public double getX() {
-		return getComponent(0);
+		return get(0);
 	}
 	
 	public double getY() {
-		return getComponent(1);
+		return get(1);
 	}
 	
 	public double getZ() {
-		return getComponent(2);
+		return get(2);
 	}
 	
 	public Vector3D cross(Vector<D3> other) {
-		double x1 = getX(); double x2 = other.getComponent(0);
-		double y1 = getY(); double y2 = other.getComponent(1);
-		double z1 = getZ(); double z2 = other.getComponent(2);
+		double x1 = getX(); double x2 = other.get(0);
+		double y1 = getY(); double y2 = other.get(1);
+		double z1 = getZ(); double z2 = other.get(2);
 		
 		double xPrime = (y1 * z2) - (z1 * y2);
 		double yPrime = (z1 * x2) - (x1 * z2);
