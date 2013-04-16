@@ -65,9 +65,9 @@ public interface Point<D extends Dimension<D>> {
 	 */
 	public double distance(Point<D> other);
 
-	public int getNumComponents();
+	public int size();
 
-	public double getComponent(int index) throws IndexOutOfBoundsException;
+	public double get(int index) throws IndexOutOfBoundsException;
 	
 	@Override
 	public boolean equals(Object o);

@@ -15,15 +15,15 @@ public class Point3D extends GeneralPoint<D3> {
 	}
 	
 	public double getX() {
-		return getComponent(0);
+		return get(0);
 	}
 	
 	public double getY() {
-		return getComponent(1);
+		return get(1);
 	}
 	
 	public double getZ() {
-		return getComponent(2);
+		return get(2);
 	}
 	
 	public static Point3D new3DPoint() {

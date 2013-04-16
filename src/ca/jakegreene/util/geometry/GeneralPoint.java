@@ -19,9 +19,9 @@ public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 	 */
 	@Override
 	public Point<D> add(double scalar) {
-		List<Double> components = Lists.newArrayListWithCapacity(getNumComponents());
-		for (int index = 0; index < getNumComponents(); ++index) {
-			double component = getComponent(index);
+		List<Double> components = Lists.newArrayListWithCapacity(size());
+		for (int index = 0; index < size(); ++index) {
+			double component = get(index);
 			components.add(index, component + scalar);
 		}
 		return create(components);
@@ -32,10 +32,10 @@ public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 	 */
 	@Override
 	public Point<D> add(Point<D> other) {
-		List<Double> components = Lists.newArrayListWithCapacity(getNumComponents());
-		for (int index = 0; index < getNumComponents(); ++index) {
-			double thisComponent = this.getComponent(index);
-			double otherComponent = other.getComponent(index);
+		List<Double> components = Lists.newArrayListWithCapacity(size());
+		for (int index = 0; index < size(); ++index) {
+			double thisComponent = this.get(index);
+			double otherComponent = other.get(index);
 			components.add(index, thisComponent + otherComponent);
 		}
 		return create(components);
@@ -54,10 +54,10 @@ public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 	 */
 	@Override
 	public Point<D> subtract(Point<D> other) {
-		List<Double> components = Lists.newArrayListWithCapacity(getNumComponents());
-		for (int index = 0; index < getNumComponents(); ++index) {
-			double thisComponent = this.getComponent(index);
-			double otherComponent = other.getComponent(index);
+		List<Double> components = Lists.newArrayListWithCapacity(size());
+		for (int index = 0; index < size(); ++index) {
+			double thisComponent = this.get(index);
+			double otherComponent = other.get(index);
 			components.add(index, thisComponent - otherComponent);
 		}
 		return create(components);
@@ -68,9 +68,9 @@ public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 	 */
 	@Override
 	public Point<D> multiply(double scalar) {
-		List<Double> components = Lists.newArrayListWithCapacity(getNumComponents());
-		for (int index = 0; index < getNumComponents(); ++index) {
-			double component = getComponent(index);
+		List<Double> components = Lists.newArrayListWithCapacity(size());
+		for (int index = 0; index < size(); ++index) {
+			double component = get(index);
 			components.add(component * scalar);
 		}
 		return create(components);
@@ -81,9 +81,9 @@ public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 	 */
 	@Override
 	public Vector<D> difference(Point<D> other) {
-		List<Double> components = Lists.newArrayListWithCapacity(getNumComponents());
-		for (int index = 0; index < getNumComponents(); ++index) {
-			double diff = getComponent(index) - other.getComponent(index);
+		List<Double> components = Lists.newArrayListWithCapacity(size());
+		for (int index = 0; index < size(); ++index) {
+			double diff = get(index) - other.get(index);
 			components.add(diff);
 		}
 		D dimension = this.dimension.create(components);
@@ -94,7 +94,7 @@ public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 	 * @see ca.jakegreene.util.geometry.Point#getNumComponents()
 	 */
 	@Override
-	public int getNumComponents() {
+	public int size() {
 		return dimension.size();
 	}
 	
@@ -102,7 +102,7 @@ public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 	 * @see ca.jakegreene.util.geometry.Point#getComponent(int)
 	 */
 	@Override
-	public double getComponent(int index) throws IndexOutOfBoundsException {
+	public double get(int index) throws IndexOutOfBoundsException {
 		return dimension.getComponent(index);
 	}
 	
@@ -113,20 +113,20 @@ public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 	
 	@Override
 	public String toString() {
-		int components = getNumComponents();
+		int components = size();
 		String msg = components+"D Point: <";
 		for (int i = 0; i < components - 1; ++i) {
-			msg += getComponent(i) + ", ";
+			msg += get(i) + ", ";
 		}
-		msg += getComponent(components - 1) + ">";
+		msg += get(components - 1) + ">";
 		return msg;
 	}
 	
 	@Override
 	public double distanceSquared(Point<D> other) {
 		double squareSum = 0;
-		for (int index = 0; index < getNumComponents(); ++index) {
-			double delta = other.getComponent(index) - this.getComponent(index);
+		for (int index = 0; index < size(); ++index) {
+			double delta = other.get(index) - this.get(index);
 			squareSum += delta*delta;
 		}
 		return squareSum;
@@ -151,12 +151,12 @@ public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 		
 		Point other = (Point)o;
 		
-		if (getNumComponents() != other.getNumComponents()) {
+		if (size() != other.size()) {
 			return false;
 		}
 		
-		for (int index = 0; index < getNumComponents(); ++index) {
-			if (this.getComponent(index) != other.getComponent(index)) {
+		for (int index = 0; index < size(); ++index) {
+			if (this.get(index) != other.get(index)) {
 				return false;
 			}
 		}
@@ -166,8 +166,8 @@ public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 	@Override
 	public int hashCode() {
 		List<Double> components = new LinkedList<Double>();
-		for (int index = 0; index < getNumComponents(); ++index) {
-			components.add(getComponent(index));
+		for (int index = 0; index < size(); ++index) {
+			components.add(get(index));
 		}
 		return Objects.hashCode(components);
 	}

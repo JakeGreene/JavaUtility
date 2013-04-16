@@ -32,8 +32,8 @@ public class Point2DTest {
 		double scalar = 2.5;
 		Point<D2> scaledPoint = point.add(scalar);
 		
-		assertEquals("Point2D Add Scalar to X", X+scalar, scaledPoint.getComponent(0), DELTA);
-		assertEquals("Point2D Add Scalar to Y", Y+scalar, scaledPoint.getComponent(1), DELTA);
+		assertEquals("Point2D Add Scalar to X", X+scalar, scaledPoint.get(0), DELTA);
+		assertEquals("Point2D Add Scalar to Y", Y+scalar, scaledPoint.get(1), DELTA);
 		assertEquals("Point2D Add Scalar to X did not change original", X, point.getX(), DELTA);
 		assertEquals("Point2D Add Scalar to Y did not change original", Y, point.getY(), DELTA);
 	}
@@ -45,8 +45,8 @@ public class Point2DTest {
 		Point2D shifter = Point2D.new2DPoint(xShift, yShift);
 		Point<D2> shiftedPoint = point.add(shifter);
 		
-		assertEquals("Point2D Add Point to X", X+xShift, shiftedPoint.getComponent(0), DELTA);
-		assertEquals("Point2D Add Point to Y", Y+yShift, shiftedPoint.getComponent(1), DELTA);
+		assertEquals("Point2D Add Point to X", X+xShift, shiftedPoint.get(0), DELTA);
+		assertEquals("Point2D Add Point to Y", Y+yShift, shiftedPoint.get(1), DELTA);
 		assertEquals("Point2D Add Point to X did not change original", X, point.getX(), DELTA);
 		assertEquals("Point2D Add Point to Y did not change original", Y, point.getY(), DELTA);
 		assertEquals("Point2D Add Point to X did not change shifter", xShift, shifter.getX(), DELTA);
@@ -59,8 +59,8 @@ public class Point2DTest {
 		double scalar = 2.5;
 		Point<D2> scaledPoint = point.subtract(scalar);
 		
-		assertEquals("Point2D Subtract Scalar to X", X-scalar, scaledPoint.getComponent(0), DELTA);
-		assertEquals("Point2D Subtract Scalar to Y", Y-scalar, scaledPoint.getComponent(1), DELTA);
+		assertEquals("Point2D Subtract Scalar to X", X-scalar, scaledPoint.get(0), DELTA);
+		assertEquals("Point2D Subtract Scalar to Y", Y-scalar, scaledPoint.get(1), DELTA);
 		assertEquals("Point2D Subtract Scalar to X did not change original", X, point.getX(), DELTA);
 		assertEquals("Point2D Subtract Scalar to Y did not change original", Y, point.getY(), DELTA);
 	}
@@ -72,8 +72,8 @@ public class Point2DTest {
 		Point2D shifter = Point2D.new2DPoint(xShift, yShift);
 		Point<D2> shiftedPoint = point.subtract(shifter);
 		
-		assertEquals("Point2D Subtract Point to X", X-xShift, shiftedPoint.getComponent(0), DELTA);
-		assertEquals("Point2D Subtract Point to Y", Y-yShift, shiftedPoint.getComponent(1), DELTA);
+		assertEquals("Point2D Subtract Point to X", X-xShift, shiftedPoint.get(0), DELTA);
+		assertEquals("Point2D Subtract Point to Y", Y-yShift, shiftedPoint.get(1), DELTA);
 		assertEquals("Point2D Subtract Point to X did not change original", X, point.getX(), DELTA);
 		assertEquals("Point2D Subtract Point to Y did not change original", Y, point.getY(), DELTA);
 		assertEquals("Point2D Subtract Point to X did not change shifter", xShift, shifter.getX(), DELTA);
@@ -85,8 +85,8 @@ public class Point2DTest {
 		double scalar = 2.5;
 		Point<D2> scaledPoint = point.multiply(scalar);
 		
-		assertEquals("Point2D Multiply Scalar to X", X*scalar, scaledPoint.getComponent(0), DELTA);
-		assertEquals("Point2D Multiply Scalar to Y", Y*scalar, scaledPoint.getComponent(1), DELTA);
+		assertEquals("Point2D Multiply Scalar to X", X*scalar, scaledPoint.get(0), DELTA);
+		assertEquals("Point2D Multiply Scalar to Y", Y*scalar, scaledPoint.get(1), DELTA);
 		assertEquals("Point2D Multiply Scalar to X did not change original", X, point.getX(), DELTA);
 		assertEquals("Point2D Multiply Scalar to Y did not change original", Y, point.getY(), DELTA);
 	}
