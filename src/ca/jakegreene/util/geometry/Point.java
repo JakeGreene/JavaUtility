@@ -1,5 +1,7 @@
 package ca.jakegreene.util.geometry;
 
+import java.util.List;
+
 public interface Point<D extends Dimension<D>> {
 
 	/**
@@ -68,6 +70,8 @@ public interface Point<D extends Dimension<D>> {
 	public int size();
 
 	public double get(int index) throws IndexOutOfBoundsException;
+	
+	public List<Double> components();
 	
 	@Override
 	public boolean equals(Object o);

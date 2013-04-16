@@ -171,4 +171,9 @@ public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 		}
 		return Objects.hashCode(components);
 	}
+
+	@Override
+	public List<Double> components() {
+		return dimension.getComponents();
+	}
 }
