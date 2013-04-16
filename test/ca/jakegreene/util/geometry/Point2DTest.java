@@ -2,10 +2,6 @@ package ca.jakegreene.util.geometry;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import org.junit.Test;
 
@@ -40,6 +36,11 @@ public class Point2DTest extends PointTest<D2> {
 	@Override
 	protected Point<D2> createTestPoint() {
 		return Point2D.new2DPoint((X+1)*5, (Y+1)*7);
+	}
+
+	@Override
+	protected Vector<D2> createTestVector() {
+		return Vector2D.new2DVector(2.3, 3.1);
 	}
 
 }

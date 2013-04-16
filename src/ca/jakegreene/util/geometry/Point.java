@@ -13,12 +13,12 @@ public interface Point<D extends Dimension<D>> {
 	public Point<D> add(double scalar);
 
 	/**
-	 * Add this Point to <code>other</code> creating a new Point such that
+	 * Add <code>other</code> to <code>this</code> Point creating a new Point such that
 	 * e_i = this_i + other_i
 	 * @param other
 	 * @return
 	 */
-	public Point<D> add(Point<D> other);
+	public Point<D> add(Vector<D> other);
 
 	/**
 	 * Subtract this Point and <code>scalar</code> creating a new Point such that

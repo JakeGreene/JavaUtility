@@ -45,6 +45,7 @@ public abstract class PointTest<D extends Dimension<D>> {
 	}
 	
 	protected abstract Point<D> createTestPoint();
+	protected abstract Vector<D> createTestVector();
 	
 	@Test
 	public void testAddScalar() {
@@ -58,14 +59,13 @@ public abstract class PointTest<D extends Dimension<D>> {
 	
 	@Test
 	public void testAddPoint() {
-		Point<D> shifter = createTestPoint();
+		Vector<D> shifter = createTestVector();
 		List<Double> scalars = shifter.components();
 		Point<D> shifted = point.add(shifter);
 		
 		String test = "Point Add Vector";
 		checkShifted(shifted, components, scalars, test);
 		checkUnchanged(point, components, test);
-		checkUnchanged(shifter, scalars, test);
 	}
 	
 	@Test

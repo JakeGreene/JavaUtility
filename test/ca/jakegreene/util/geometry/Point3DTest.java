@@ -20,6 +20,11 @@ public class Point3DTest extends PointTest<D3> {
 		return new Point3D(567.0, -765.4, 0.09);
 	}
 	
+	@Override
+	protected Vector<D3> createTestVector() {
+		return Vector3D.new3DVector(-9.4, 5.3, 4.8);
+	}
+	
 	@Test
 	public void testEqualityDiffType() {
 		Point<D3> otherPoint = Points.new3DPoint(X, Y, Z);
