@@ -73,6 +73,8 @@ public interface Point<D extends Dimension<D>> {
 	
 	public List<Double> components();
 	
+	public Point<D> copy();
+	
 	@Override
 	public boolean equals(Object o);
 	
