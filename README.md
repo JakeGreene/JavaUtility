@@ -19,32 +19,32 @@ The Separate Vectors solve the problem of dimension specific operations but the 
 
 My Geometry package attempts to take the benefits of both approaches without any of the limitations. There is a single interface (eg Point) that accepts as a generic parameter it dimensionality.
 
-	<code>Point<D2> point = Points.new2DPoint(x, y);</code>
+	Point<D2> point = Points.new2DPoint(x, y);
 
 This allows the creation of classes that can accept either 2D or 3D Points and Vectors
 
-	<code>public class MyClass<D extends Dimension> {
+	public class MyClass<D extends Dimension> {
 		private Point<D> point;
 		private Vector<D> vector;
 
 		...
-	      }
-        </code>
+	}
+        
  
 Additionally, the interface has been designed so that a Point of type D can only accept other Points of type D
 
-	<code>Vector<D2> other ...
-	      Vector<D3> badOther ...
-	      Vector<D2> result = vector.dot(other); // syntactically valid
-              vector.dot(badOther); // syntacticaly invalid
-        </code>
+	Vector<D2> other ...
+	Vector<D3> badOther ...
+	Vector<D2> result = vector.dot(other); // syntactically valid
+        vector.dot(badOther); // syntacticaly invalid
+        
 
 Separate classes exist that conform to these interfaces but also provide dimension specific functionality
 	
-	<code>Point2D point ...
-	      double x = point.getX(); </code>
+	Point2D point ...
+	double x = point.getX();
 
 while utility classes exist to work with the generic Vector and Point classes
 
-	<code>Vector<D2> vector = Vectors.new2DVector(x, y, z);
-	      Vector<D2> cross = Vectors.cross(vector, otherVector); </code>
+	Vector<D2> vector = Vectors.new2DVector(x, y, z);
+	Vector<D2> cross = Vectors.cross(vector, otherVector);
