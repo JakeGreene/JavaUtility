@@ -1,5 +1,7 @@
 package ca.jakegreene.util.geometry;
 
+import java.util.List;
+
 /**
  * Convenience class for 2D points
  * @author jakegreene
@@ -28,6 +30,16 @@ public class Point2D extends GeneralPoint<D2> {
 	
 	public static Point2D newPoint(double x, double y) {
 		return new Point2D(x, y);
+	}
+
+	@Override
+	protected Point<D2> create(List<Double> components) {
+		return new Point2D(components.get(0), components.get(1));
+	}
+
+	@Override
+	protected Vector<D2> createVector(List<Double> components) {
+		return Vectors.create2dVector(components.get(0), components.get(1));
 	}
 	
 }

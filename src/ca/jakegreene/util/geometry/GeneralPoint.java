@@ -6,7 +6,7 @@ import java.util.List;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
-public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
+public abstract class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 	
 	private final D dimension;
 	
@@ -106,10 +106,14 @@ public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 		return dimension.getComponent(index);
 	}
 	
-	protected Point<D> create(List<Double> components) {
-		D dim = dimension.create(components);
-		return new GeneralPoint<D>(dim);
+	@Override
+	public Point<D> copy() {
+		return create(dimension.getComponents());
 	}
+	
+	protected abstract Point<D> create(List<Double> components);
+	
+	protected abstract Vector<D> createVector(List<Double> components);
 	
 	@Override
 	public String toString() {
@@ -175,10 +179,5 @@ public class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 	@Override
 	public List<Double> components() {
 		return dimension.getComponents();
-	}
-
-	@Override
-	public Point<D> copy() {
-		return new GeneralPoint<D>(dimension);
 	}
 }

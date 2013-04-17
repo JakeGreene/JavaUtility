@@ -9,13 +9,13 @@ public final class Points {
 	}
 	
 	public static Point<D2> new2DPoint(double x, double y) {
-		return new GeneralPoint<D2>(new D2(x, y));
+		return new Point2D(x, y);
 	}
 	
 	public static Point<D2> new2DPointFromAngle(double length, double radAngle) {
 		double x = length * Math.cos(radAngle);
 		double y = length * Math.sin(radAngle);
-		return new GeneralPoint<D2>(new D2(x, y));
+		return new Point2D(x, y);
 	}
 	
 	public static Point<D3> new3DPoint() {
@@ -23,7 +23,7 @@ public final class Points {
 	}
 	
 	public static Point<D3> new3DPoint(double x, double y, double z) {
-		return new GeneralPoint<D3>(new D3(x, y, z));
+		return new Point3D(x, y, z);
 	}
 	
 	public static Point<D3> new3DPointFromAngles(double length, double radIncline, double radAzimuth) {
