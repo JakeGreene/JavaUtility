@@ -31,12 +31,12 @@ public abstract class GeneralPoint<D extends Dimension> implements Point<D> {
 	 * @see ca.jakegreene.util.geometry.Point#add(ca.jakegreene.util.geometry.Point)
 	 */
 	@Override
-	public Point<D> add(Vector<D> other) {
-		List<Double> components = Lists.newArrayListWithCapacity(size());
-		for (int index = 0; index < size(); ++index) {
+	public Point<D> add(Vector<? super D> other) {
+		List<Double> components = components();
+		for (int index = 0; index < other.size(); ++index) {
 			double thisComponent = this.get(index);
 			double otherComponent = other.get(index);
-			components.add(index, thisComponent + otherComponent);
+			components.set(index, thisComponent + otherComponent);
 		}
 		return create(components);
 	}

@@ -30,17 +30,21 @@ public abstract class PointTest<D extends Dimension> {
 	
 	private void checkShifted(Point<D> shifted, List<Double> originalComponents, double scalar, String test) {
 		for (int index = 0; index < originalComponents.size(); ++index) {
-			assertEquals(test + ". Components "+ index +" shifted by "+scalar,  originalComponents.get(index) + scalar, 
+			assertEquals(test + ". Component "+ index +" shifted by "+scalar,  originalComponents.get(index) + scalar, 
 																				shifted.get(index), 
 																				DELTA);
 		}
 	}
 	
-	private void checkShifted(Point<D> shifted, List<Double> original, List<Double> scalars, String test) {
-		for (int index = 0; index < original.size(); ++index) {
-			assertEquals(test + ". Components "+ index +" shifted by "+scalars.get(index),  original.get(index) + scalars.get(index), 
+	protected void checkShifted(Point<D> shifted, List<Double> original, List<Double> scalars, String test) {
+		for (int index = 0; index < scalars.size(); ++index) {
+			assertEquals(test + ". Component "+ index +" shifted by "+scalars.get(index),  original.get(index) + scalars.get(index), 
 																							shifted.get(index), 
 																							DELTA);
+		}
+		
+		for (int index = scalars.size(); index < shifted.size(); ++index) {
+			assertEquals(test + ". Component "+ index +" stayed the same", original.get(index), shifted.get(index), DELTA);
 		}
 	}
 	

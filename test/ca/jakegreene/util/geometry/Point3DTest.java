@@ -3,6 +3,8 @@ package ca.jakegreene.util.geometry;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+import java.util.List;
+
 import org.junit.Test;
 
 public class Point3DTest extends PointTest<D3> {
@@ -23,6 +25,17 @@ public class Point3DTest extends PointTest<D3> {
 	@Override
 	protected Vector<D3> createTestVector() {
 		return Vector3D.new3DVector(-9.4, 5.3, 4.8);
+	}
+	
+	@Test
+	public void testAddSmallerVector() {
+		Vector<D2> shifter = Vectors.create2dVector(X, Y);
+		List<Double> scalars = shifter.components();
+		Point<D3> shifted = point.add(shifter);
+		
+		String test = "Point Add Smaller Vector";
+		checkShifted(shifted, components, scalars, test);
+		checkUnchanged(point, components, test);
 	}
 	
 	@Test
