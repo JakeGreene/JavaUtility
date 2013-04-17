@@ -15,7 +15,7 @@ public interface Point<D extends Dimension> {
 	/**
 	 * Add <code>other</code> to <code>this</code> Point creating a new Point such that
 	 * e_i = this_i + other_i
-	 * @param other
+	 * @param other A Vector of similar or smaller dimension
 	 * @return
 	 */
 	public Point<D> add(Vector<? super D> other);
@@ -39,7 +39,7 @@ public interface Point<D extends Dimension> {
 	/**
 	 * Multiply this Point with <code>scalar</code> creating a new Point such that
 	 * e_i = this_i * scalar
-	 * @param other
+	 * @param other A Vector of similar or smaller dimension
 	 * @return
 	 */
 	public Point<D> multiply(double scalar);
