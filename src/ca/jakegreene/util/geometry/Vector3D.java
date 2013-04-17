@@ -1,5 +1,7 @@
 package ca.jakegreene.util.geometry;
 
+import java.util.List;
+
 /**
  * Convenience class for 3D Vectors. Includes 3D specific functionality
  * @author jakegreene
@@ -74,5 +76,10 @@ public class Vector3D extends GeneralVector<D3> {
 		double y = length * Math.sin(radIncline) * Math.sin(radAzimuth);
 		double z = length * Math.cos(radIncline);
 		return new Vector3D(x, y, z);
+	}
+
+	@Override
+	protected Vector<D3> create(List<Double> components) {
+		return new Vector3D(components.get(0), components.get(1), components.get(2));
 	}
 }

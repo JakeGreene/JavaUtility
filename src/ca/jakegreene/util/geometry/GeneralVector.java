@@ -6,7 +6,7 @@ import java.util.List;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
-public class GeneralVector<D extends Dimension<D>> implements Vector<D> {
+public abstract class GeneralVector<D extends Dimension<D>> implements Vector<D> {
 	
 	private final D dimension;
 	
@@ -120,9 +120,7 @@ public class GeneralVector<D extends Dimension<D>> implements Vector<D> {
 		return create(components);
 	}
 	
-	protected Vector<D> create(List<Double> components) {
-		return new GeneralVector<D>(dimension.create(components));
-	}
+	protected abstract Vector<D> create(List<Double> components);
 
 
 	@Override
@@ -179,6 +177,6 @@ public class GeneralVector<D extends Dimension<D>> implements Vector<D> {
 
 	@Override
 	public Vector<D> copy() {
-		return new GeneralVector<D>(dimension);
+		return create(dimension.getComponents());
 	}
 }

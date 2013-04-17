@@ -86,8 +86,7 @@ public abstract class GeneralPoint<D extends Dimension<D>> implements Point<D> {
 			double diff = get(index) - other.get(index);
 			components.add(diff);
 		}
-		D dimension = this.dimension.create(components);
-		return new GeneralVector<D>(dimension);
+		return createVector(components);
 	}
 	
 	/* (non-Javadoc)

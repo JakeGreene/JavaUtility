@@ -1,5 +1,7 @@
 package ca.jakegreene.util.geometry;
 
+import java.util.List;
+
 /**
  * Convenience class for 2D Vectors
  * @author jakegreene
@@ -38,5 +40,10 @@ public class Vector2D extends GeneralVector<D2> {
 		double x = length * Math.cos(radAngle);
 		double y = length * Math.sin(radAngle);
 		return new Vector2D(x, y);
+	}
+
+	@Override
+	protected Vector<D2> create(List<Double> components) {
+		return new Vector2D(components.get(0), components.get(1));
 	}
 }

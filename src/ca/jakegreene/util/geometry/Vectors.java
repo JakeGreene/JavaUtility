@@ -8,8 +8,7 @@ public final class Vectors {
 	}
 	
 	public static Vector<D2> create2dVector(double x, double y) {
-		D2 d = new D2(x, y);
-		return new GeneralVector<D2>(d);
+		return new Vector2D(x, y);
 	}
 	
 	public static Vector<D3> create3dVector() {
@@ -17,8 +16,7 @@ public final class Vectors {
 	}
 	
 	public static Vector<D3> create3dVector(double x, double y, double z) {
-		D3 d = new D3(x, y, z);
-		return new GeneralVector<D3>(d);
+		return new Vector3D(x, y, z);
 	}
 	
 	public static Vector<D3> create3dVectorFromAngles(double length, double incline, double azimuth) {
