@@ -9,7 +9,7 @@ import java.util.List;
  * @author jakegreene
  *
  */
-public class D3 implements Dimension<D3> {
+public class D3 extends D2 {
 
 	private final double x;
 	private final double y;
@@ -39,11 +39,6 @@ public class D3 implements Dimension<D3> {
 			case 2: return z;
 			default: throw new IndexOutOfBoundsException(D3.class.getCanonicalName() + " does not have a component at index " + index);
 		}
-	}
-
-	@Override
-	public D3 create(List<Double> components) {
-		return new D3(components.get(0), components.get(1), components.get(2));
 	}
 
 	@Override

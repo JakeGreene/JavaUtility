@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @param <V>
  */
-public interface Vector<D extends Dimension<D>> {
+public interface Vector<D extends Dimension> {
 
 	/**
 	 * Add the scalar value <code>scalar</code> to this Vector

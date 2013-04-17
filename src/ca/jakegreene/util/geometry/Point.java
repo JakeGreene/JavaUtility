@@ -2,7 +2,7 @@ package ca.jakegreene.util.geometry;
 
 import java.util.List;
 
-public interface Point<D extends Dimension<D>> {
+public interface Point<D extends Dimension> {
 
 	/**
 	 * Add this Point to <code>scalar</code> creating a new Point such that

@@ -6,7 +6,7 @@ import java.util.List;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
-public abstract class GeneralVector<D extends Dimension<D>> implements Vector<D> {
+public abstract class GeneralVector<D extends Dimension> implements Vector<D> {
 	
 	private final D dimension;
 	

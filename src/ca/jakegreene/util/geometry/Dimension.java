@@ -2,7 +2,7 @@ package ca.jakegreene.util.geometry;
 
 import java.util.List;
 
-public interface Dimension<D extends Dimension<D>> {
+public interface Dimension {
 	/**
 	 * Determine the size of this Dimension.
 	 * e.g. A 2-Dimensional Dimension will return 2
@@ -26,11 +26,4 @@ public interface Dimension<D extends Dimension<D>> {
 	 * @return
 	 */
 	public List<Double> getComponents();
-	
-	/**
-	 * Create a Dimension instance of the same dimensionality with the given components
-	 * @param components
-	 * @return
-	 */
-	public D create(List<Double> components);
 }

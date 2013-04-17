@@ -10,7 +10,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
-public abstract class VectorTest<D extends Dimension<D>> {
+public abstract class VectorTest<D extends Dimension> {
 	
 	protected final Vector<D> vector;
 	protected final List<Double> components;

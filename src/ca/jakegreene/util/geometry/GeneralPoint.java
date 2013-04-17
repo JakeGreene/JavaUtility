@@ -6,7 +6,7 @@ import java.util.List;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
-public abstract class GeneralPoint<D extends Dimension<D>> implements Point<D> {
+public abstract class GeneralPoint<D extends Dimension> implements Point<D> {
 	
 	private final D dimension;
 	

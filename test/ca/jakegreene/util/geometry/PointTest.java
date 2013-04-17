@@ -10,7 +10,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
-public abstract class PointTest<D extends Dimension<D>> {
+public abstract class PointTest<D extends Dimension> {
 	
 	protected final Point<D> point;
 	protected final List<Double> components;
