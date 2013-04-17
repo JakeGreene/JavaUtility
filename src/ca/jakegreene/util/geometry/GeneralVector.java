@@ -54,7 +54,7 @@ public abstract class GeneralVector<D extends Dimension> implements Vector<D> {
 	 * @see ca.jakegreene.util.geometry.Vector#minus(V)
 	 */
 	@Override
-	public Vector<D> subtract(Vector<D> other) {
+	public Vector<D> subtract(Vector<? super D> other) {
 		return add(other.multiply(-1));
 	}
 	

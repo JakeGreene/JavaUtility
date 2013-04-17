@@ -38,12 +38,12 @@ public interface Vector<D extends Dimension> {
 
 	/**
 	 * Add the components of <code>other</code> to this
-	 * to create a new Vector such that element e_i for all i
+	 * to create a new Vector such that element e_i for all i in <code>other</code>
 	 * e_i = this_i - other_i
-	 * @param other
+	 * @param other A Vector of similar or lower dimension than this Vector
 	 * @return
 	 */
-	public Vector<D> subtract(Vector<D> other);
+	public Vector<D> subtract(Vector<? super D> other);
 
 	/**
 	 * Multiply each component of this Vector

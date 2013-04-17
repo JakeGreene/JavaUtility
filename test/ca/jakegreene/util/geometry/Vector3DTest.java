@@ -30,6 +30,20 @@ public class Vector3DTest extends VectorTest<D3> {
 	}
 	
 	@Test
+	public void testSubVectorLowerDimension() {
+		Vector<D2> shifter = Vectors.create2dVector(X, Y);
+		
+		Vector<D2> negShifter = shifter.multiply(-1);
+		List<Double> scalars = negShifter.components();
+		
+		Vector<D3> shifted = vector.subtract(shifter);
+		
+		String test = "Point Subtract Smaller Vector";
+		checkShifted(shifted, components, scalars, test);
+		checkUnchanged(vector, components, test);
+	}
+	
+	@Test
 	public void testCross() {
 		Vector<D3> other = createTestVector();
 		List<Double> otherComponents = other.components();
