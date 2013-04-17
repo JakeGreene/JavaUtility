@@ -32,12 +32,12 @@ public abstract class GeneralVector<D extends Dimension> implements Vector<D> {
 	 * @see ca.jakegreene.util.geometry.Vector#plus(V)
 	 */
 	@Override
-	public Vector<D> add(Vector<D> other) {
-		List<Double> components = Lists.newArrayListWithCapacity(size());
-		for (int index = 0; index < size(); ++index) {
+	public Vector<D> add(Vector<? super D> other) {
+		List<Double> components = components();
+		for (int index = 0; index < other.size(); ++index) {
 			double myComponent = this.get(index);
 			double otherComponent = other.get(index);
-			components.add(index, myComponent + otherComponent);
+			components.set(index, myComponent + otherComponent);
 		}
 		return create(components);
 	}

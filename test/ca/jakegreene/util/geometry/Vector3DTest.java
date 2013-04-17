@@ -19,6 +19,17 @@ public class Vector3DTest extends VectorTest<D3> {
 	}
 	
 	@Test
+	public void testAddVectorLowerDimension() {
+		Vector<D2> shifter = Vectors.create2dVector(X, Y);
+		List<Double> scalars = shifter.components();
+		Vector<D3> shifted = vector.add(shifter);
+		
+		String test = "Point Add Smaller Vector";
+		checkShifted(shifted, components, scalars, test);
+		checkUnchanged(vector, components, test);
+	}
+	
+	@Test
 	public void testCross() {
 		Vector<D3> other = createTestVector();
 		List<Double> otherComponents = other.components();

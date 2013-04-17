@@ -19,13 +19,13 @@ public interface Vector<D extends Dimension> {
 
 	/**
 	 * Add the components of <code>other</code> to this
-	 * to create a new Vector such that element e_i for all i
+	 * to create a new Vector such that element e_i for all i in <code>other</code>
 	 * e_i = this_i + other_i
-	 * @param other
+	 * @param other A Vector of similar or lower dimension than this Vector
 	 * @return
 	 * @throws DimensionalMixException
 	 */
-	public Vector<D> add(Vector<D> other);
+	public Vector<D> add(Vector<? super D> other);
 
 	/**
 	 * Subtract the scalar value <code>scalar</code> from this Vector
