@@ -76,6 +76,11 @@ public interface Vector<D extends Dimension> {
 
 	public double get(int index) throws IndexOutOfBoundsException;
 	
+	/**
+	 * A View of this Vector's components. Changing the returned list has no effect on this
+	 * Vector
+	 * @return
+	 */
 	public List<Double> components();
 	
 	/**

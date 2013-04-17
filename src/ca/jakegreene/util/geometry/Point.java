@@ -71,6 +71,11 @@ public interface Point<D extends Dimension> {
 
 	public double get(int index) throws IndexOutOfBoundsException;
 	
+	/**
+	 * A View of this Point's components. Changing the returned list has no effect on this
+	 * Point
+	 * @return
+	 */
 	public List<Double> components();
 	
 	public Point<D> copy();
