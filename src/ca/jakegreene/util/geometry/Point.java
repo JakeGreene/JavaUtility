@@ -34,7 +34,7 @@ public interface Point<D extends Dimension> {
 	 * @param other
 	 * @return
 	 */
-	public Point<D> subtract(Vector<D> other);
+	public Point<D> subtract(Vector<? super D> other);
 
 	/**
 	 * Multiply this Point with <code>scalar</code> creating a new Point such that

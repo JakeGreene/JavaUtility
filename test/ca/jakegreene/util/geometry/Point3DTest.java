@@ -39,6 +39,20 @@ public class Point3DTest extends PointTest<D3> {
 	}
 	
 	@Test
+	public void testSubSmallerVector() {
+		Vector<D2> shifter = Vectors.create2dVector(X, Y);
+		
+		Vector<D2> negShifter = shifter.multiply(-1);
+		List<Double> scalars = negShifter.components();
+		
+		Point<D3> shifted = point.subtract(shifter);
+		
+		String test = "Point Subtract Smaller Vector";
+		checkShifted(shifted, components, scalars, test);
+		checkUnchanged(point, components, test);
+	}
+	
+	@Test
 	public void testEqualityDiffType() {
 		Point<D3> otherPoint = Points.new3DPoint(X, Y, Z);
 		assertEquals("Point2D Equals Point<D2>", point, otherPoint);
