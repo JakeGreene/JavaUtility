@@ -1,6 +1,5 @@
 package ca.jakegreene.util.geometry;
 
-import java.util.List;
 
 /**
  * 
@@ -8,7 +7,7 @@ import java.util.List;
  *
  * @param <V>
  */
-public interface Vector<D extends Dimension> {
+public interface Vector<D extends Dimension> extends CartesianObject<D> {
 
 	/**
 	 * Add the scalar value <code>scalar</code> to this Vector
@@ -71,27 +70,6 @@ public interface Vector<D extends Dimension> {
 	 * @return
 	 */
 	public Vector<D> normalize();
-
-	public int size();
-
-	public double get(int index) throws IndexOutOfBoundsException;
-	
-	/**
-	 * Create a new Vector based on this Vector but with component <code>index</code>
-	 * changed to have the value <code>value</code>
-	 * @param index
-	 * @param value
-	 * @return
-	 * @throws IndexOutOfBoundsException
-	 */
-	public Vector<D> set(int index, double valie) throws IndexOutOfBoundsException;
-	
-	/**
-	 * A View of this Vector's components. Changing the returned list has no effect on this
-	 * Vector
-	 * @return
-	 */
-	public List<Double> components();
 	
 	/**
 	 * Create an exact copy of this Vector such that

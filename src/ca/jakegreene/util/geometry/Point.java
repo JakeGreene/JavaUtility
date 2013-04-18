@@ -1,6 +1,5 @@
 package ca.jakegreene.util.geometry;
 
-import java.util.List;
 
 /**
  * An Immutable Euclidean Point.
@@ -8,7 +7,7 @@ import java.util.List;
  *
  * @param <D> The Dimension of the Point
  */
-public interface Point<D extends Dimension> {
+public interface Point<D extends Dimension> extends CartesianObject<D> {
 
 	/**
 	 * Add this Point to <code>scalar</code> creating a new Point such that
@@ -72,27 +71,6 @@ public interface Point<D extends Dimension> {
 	 * @return
 	 */
 	public double distance(Point<D> other);
-
-	public int size();
-
-	public double get(int index) throws IndexOutOfBoundsException;
-	
-	/**
-	 * Create a new Point based on this Point but with component <code>index</code>
-	 * changed to have the value <code>value</code>
-	 * @param index
-	 * @param value
-	 * @return
-	 * @throws IndexOutOfBoundsException
-	 */
-	public Point<D> set(int index, double value) throws IndexOutOfBoundsException;
-	
-	/**
-	 * A View of this Point's components. Changing the returned list has no effect on this
-	 * Point
-	 * @return
-	 */
-	public List<Double> components();
 	
 	public Point<D> copy();
 	
