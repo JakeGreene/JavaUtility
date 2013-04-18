@@ -6,12 +6,10 @@ import java.util.List;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
-public abstract class GeneralVector<D extends Dimension> implements Vector<D> {
-	
-	private final D dimension;
+abstract class GeneralVector<D extends Dimension> extends CartesianObject<D> implements Vector<D> {
 	
 	GeneralVector(D dimension) {
-		this.dimension = dimension;
+		super(dimension);
 	}
 	
 	
@@ -20,11 +18,7 @@ public abstract class GeneralVector<D extends Dimension> implements Vector<D> {
 	 */
 	@Override
 	public Vector<D> add(double scalar) {
-		List<Double> components = Lists.newArrayListWithCapacity(size());
-		for (int index = 0; index < size(); ++index) {
-			double component = get(index);
-			components.add(index, component + scalar);
-		}
+		List<Double> components = addToComponents(scalar);
 		return create(components);
 	}
 	
@@ -33,12 +27,7 @@ public abstract class GeneralVector<D extends Dimension> implements Vector<D> {
 	 */
 	@Override
 	public Vector<D> add(Vector<? super D> other) {
-		List<Double> components = components();
-		for (int index = 0; index < other.size(); ++index) {
-			double myComponent = this.get(index);
-			double otherComponent = other.get(index);
-			components.set(index, myComponent + otherComponent);
-		}
+		List<Double> components = addToComponents(other);
 		return create(components);
 	}
 	
@@ -47,7 +36,8 @@ public abstract class GeneralVector<D extends Dimension> implements Vector<D> {
 	 */
 	@Override
 	public Vector<D> subtract(double scalar) {
-		return add(-scalar);
+		List<Double> components = subtractFromComponents(scalar);
+		return create(components);
 	}
 	
 	/* (non-Javadoc)
@@ -55,7 +45,8 @@ public abstract class GeneralVector<D extends Dimension> implements Vector<D> {
 	 */
 	@Override
 	public Vector<D> subtract(Vector<? super D> other) {
-		return add(other.multiply(-1));
+		List<Double> components = subtractFromComponents(other);
+		return create(components);
 	}
 	
 	/* (non-Javadoc)
@@ -63,11 +54,7 @@ public abstract class GeneralVector<D extends Dimension> implements Vector<D> {
 	 */
     @Override
 	public Vector<D> multiply(double scalar) {
-    	List<Double> components = Lists.newArrayListWithCapacity(size());
-    	for (int index = 0; index < size(); ++index) {
-    		double component = get(index) * scalar;
-    		components.add(index, component);
-    	}
+    	List<Double> components = multiplyWithComponents(scalar);
     	return create(components);
     }
     
@@ -121,18 +108,6 @@ public abstract class GeneralVector<D extends Dimension> implements Vector<D> {
 	}
 	
 	protected abstract Vector<D> create(List<Double> components);
-
-
-	@Override
-	public int size() {
-		return dimension.size();
-	}
-
-
-	@Override
-	public double get(int index) throws IndexOutOfBoundsException {
-		return dimension.getComponent(index);
-	}
 	
 	/* (non-Javadoc)
 	 * @see ca.jakegreene.util.geometry.Point#set(int, double)
@@ -181,13 +156,7 @@ public abstract class GeneralVector<D extends Dimension> implements Vector<D> {
 
 
 	@Override
-	public List<Double> components() {
-		return dimension.getComponents();
-	}
-
-
-	@Override
 	public Vector<D> copy() {
-		return create(dimension.getComponents());
+		return create(components());
 	}
 }
