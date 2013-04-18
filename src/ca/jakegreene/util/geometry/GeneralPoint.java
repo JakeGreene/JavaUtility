@@ -179,4 +179,15 @@ public abstract class GeneralPoint<D extends Dimension> implements Point<D> {
 	public List<Double> components() {
 		return dimension.getComponents();
 	}
+
+	/* (non-Javadoc)
+	 * @see ca.jakegreene.util.geometry.Point#set(int, double)
+	 */
+	@Override
+	public Point<D> set(int index, double value)
+			throws IndexOutOfBoundsException {
+		List<Double> components = components();
+		components.set(index, value);
+		return create(components);
+	}
 }

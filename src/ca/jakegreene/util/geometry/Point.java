@@ -2,6 +2,12 @@ package ca.jakegreene.util.geometry;
 
 import java.util.List;
 
+/**
+ * An Immutable Euclidean Point.
+ * @author jakegreene
+ *
+ * @param <D> The Dimension of the Point
+ */
 public interface Point<D extends Dimension> {
 
 	/**
@@ -70,6 +76,16 @@ public interface Point<D extends Dimension> {
 	public int size();
 
 	public double get(int index) throws IndexOutOfBoundsException;
+	
+	/**
+	 * Create a new Point based on this Point but with component <code>index</code>
+	 * changed to have the value <code>value</code>
+	 * @param index
+	 * @param value
+	 * @return
+	 * @throws IndexOutOfBoundsException
+	 */
+	public Point<D> set(int index, double value) throws IndexOutOfBoundsException;
 	
 	/**
 	 * A View of this Point's components. Changing the returned list has no effect on this

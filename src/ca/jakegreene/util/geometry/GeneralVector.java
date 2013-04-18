@@ -134,6 +134,17 @@ public abstract class GeneralVector<D extends Dimension> implements Vector<D> {
 		return dimension.getComponent(index);
 	}
 	
+	/* (non-Javadoc)
+	 * @see ca.jakegreene.util.geometry.Point#set(int, double)
+	 */
+	@Override
+	public Vector<D> set(int index, double value)
+			throws IndexOutOfBoundsException {
+		List<Double> components = components();
+		components.set(index, value);
+		return create(components);
+	}
+	
 	@SuppressWarnings("rawtypes")
 	@Override
 	public boolean equals(Object o) {

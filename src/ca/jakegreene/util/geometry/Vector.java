@@ -77,6 +77,16 @@ public interface Vector<D extends Dimension> {
 	public double get(int index) throws IndexOutOfBoundsException;
 	
 	/**
+	 * Create a new Vector based on this Vector but with component <code>index</code>
+	 * changed to have the value <code>value</code>
+	 * @param index
+	 * @param value
+	 * @return
+	 * @throws IndexOutOfBoundsException
+	 */
+	public Vector<D> set(int index, double valie) throws IndexOutOfBoundsException;
+	
+	/**
 	 * A View of this Vector's components. Changing the returned list has no effect on this
 	 * Vector
 	 * @return
