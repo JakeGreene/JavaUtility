@@ -7,7 +7,7 @@ import java.util.List;
  * @author jakegreene
  *
  */
-public class Point3D extends GeneralPoint<D3> {
+public class Point3D extends GeneralPoint<D3, Point3D> {
 	Point3D() {
 		this(0, 0, 0);
 	}

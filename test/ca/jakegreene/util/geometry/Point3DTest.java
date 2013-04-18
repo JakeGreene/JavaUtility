@@ -12,9 +12,10 @@ public class Point3DTest extends PointTest<D3> {
 	public static final double X = -0.006;
 	public static final double Y = -3045.0;
 	public static final double Z = 987.45;
+	public static final Point3D point = new Point3D(X, Y, Z);
 	
 	public Point3DTest() {
-		super(new Point3D(X, Y, Z), 0.1);
+		super(point, 0.1);
 	}
 
 	@Override
@@ -31,7 +32,7 @@ public class Point3DTest extends PointTest<D3> {
 	public void testAddSmallerVector() {
 		Vector<D2> shifter = Vectors.create2dVector(X, Y);
 		List<Double> scalars = shifter.components();
-		Point<D3> shifted = point.add(shifter);
+		Point3D shifted = point.add(shifter);
 		
 		String test = "Point Add Smaller Vector";
 		checkShifted(shifted, components, scalars, test);
@@ -45,7 +46,7 @@ public class Point3DTest extends PointTest<D3> {
 		Vector<D2> negShifter = shifter.multiply(-1);
 		List<Double> scalars = negShifter.components();
 		
-		Point<D3> shifted = point.subtract(shifter);
+		Point3D shifted = point.subtract(shifter);
 		
 		String test = "Point Subtract Smaller Vector";
 		checkShifted(shifted, components, scalars, test);

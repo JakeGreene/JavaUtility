@@ -6,7 +6,7 @@ import java.util.List;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
-abstract class GeneralPoint<D extends Dimension> extends CartesianObject<D> implements Point<D> {
+abstract class GeneralPoint<D extends Dimension, P extends Point<D>> extends CartesianObject<D> implements Point<D> {
 	
 	public GeneralPoint(D dimension) {
 		super(dimension);
@@ -16,7 +16,7 @@ abstract class GeneralPoint<D extends Dimension> extends CartesianObject<D> impl
 	 * @see ca.jakegreene.util.geometry.Point#add(double)
 	 */
 	@Override
-	public Point<D> add(double scalar) {
+	public P add(double scalar) {
 		List<Double> components = addToComponents(scalar);
 		return create(components);
 	}
@@ -25,7 +25,7 @@ abstract class GeneralPoint<D extends Dimension> extends CartesianObject<D> impl
 	 * @see ca.jakegreene.util.geometry.Point#add(ca.jakegreene.util.geometry.Point)
 	 */
 	@Override
-	public Point<D> add(Vector<? super D> other) {
+	public P add(Vector<? super D> other) {
 		List<Double> components = addToComponents(other);
 		return create(components);
 	}
@@ -34,7 +34,7 @@ abstract class GeneralPoint<D extends Dimension> extends CartesianObject<D> impl
 	 * @see ca.jakegreene.util.geometry.Point#subtract(double)
 	 */
 	@Override
-	public Point<D> subtract(double scalar) {
+	public P subtract(double scalar) {
 		List<Double> components = subtractFromComponents(scalar);
 		return create(components);
 	}
@@ -43,7 +43,7 @@ abstract class GeneralPoint<D extends Dimension> extends CartesianObject<D> impl
 	 * @see ca.jakegreene.util.geometry.Point#subtract(ca.jakegreene.util.geometry.Point)
 	 */
 	@Override
-	public Point<D> subtract(Vector<? super D> other) {
+	public P subtract(Vector<? super D> other) {
 		List<Double> components = subtractFromComponents(other);
 		return create(components);
 	}
@@ -52,7 +52,7 @@ abstract class GeneralPoint<D extends Dimension> extends CartesianObject<D> impl
 	 * @see ca.jakegreene.util.geometry.Point#multiply(double)
 	 */
 	@Override
-	public Point<D> multiply(double scalar) {
+	public P multiply(double scalar) {
 		List<Double> components = multiplyWithComponents(scalar);
 		return create(components);
 	}
@@ -71,11 +71,11 @@ abstract class GeneralPoint<D extends Dimension> extends CartesianObject<D> impl
 	}
 	
 	@Override
-	public Point<D> copy() {
+	public P copy() {
 		return create(components());
 	}
 	
-	protected abstract Point<D> create(List<Double> components);
+	protected abstract P create(List<Double> components);
 	
 	protected abstract Vector<D> createVector(List<Double> components);
 	
@@ -144,7 +144,7 @@ abstract class GeneralPoint<D extends Dimension> extends CartesianObject<D> impl
 	 * @see ca.jakegreene.util.geometry.Point#set(int, double)
 	 */
 	@Override
-	public Point<D> set(int index, double value)
+	public P set(int index, double value)
 			throws IndexOutOfBoundsException {
 		List<Double> components = components();
 		components.set(index, value);

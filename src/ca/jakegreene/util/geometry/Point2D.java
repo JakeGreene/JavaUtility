@@ -7,7 +7,7 @@ import java.util.List;
  * @author jakegreene
  *
  */
-public class Point2D extends GeneralPoint<D2> {
+public class Point2D extends GeneralPoint<D2, Point2D> {
 	Point2D() {
 		this(0, 0);
 	}
@@ -33,7 +33,7 @@ public class Point2D extends GeneralPoint<D2> {
 	}
 
 	@Override
-	protected Point<D2> create(List<Double> components) {
+	protected Point2D create(List<Double> components) {
 		return new Point2D(components.get(0), components.get(1));
 	}
 
