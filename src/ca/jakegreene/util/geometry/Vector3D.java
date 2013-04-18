@@ -7,7 +7,7 @@ import java.util.List;
  * @author jakegreene
  *
  */
-public class Vector3D extends GeneralVector<D3> {
+public class Vector3D extends GeneralVector<D3, Vector3D> {
 
 	Vector3D() {
 		this(0, 0, 0);
@@ -79,7 +79,7 @@ public class Vector3D extends GeneralVector<D3> {
 	}
 
 	@Override
-	protected Vector<D3> create(List<Double> components) {
+	protected Vector3D create(List<Double> components) {
 		return new Vector3D(components.get(0), components.get(1), components.get(2));
 	}
 }

@@ -6,7 +6,7 @@ import java.util.List;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
-abstract class GeneralVector<D extends Dimension> extends CartesianObject<D> implements Vector<D> {
+abstract class GeneralVector<D extends Dimension, V extends Vector<D>> extends CartesianObject<D> implements Vector<D> {
 	
 	GeneralVector(D dimension) {
 		super(dimension);
@@ -17,7 +17,7 @@ abstract class GeneralVector<D extends Dimension> extends CartesianObject<D> imp
 	 * @see ca.jakegreene.util.geometry.Vector#plus(double)
 	 */
 	@Override
-	public Vector<D> add(double scalar) {
+	public V add(double scalar) {
 		List<Double> components = addToComponents(scalar);
 		return create(components);
 	}
@@ -26,7 +26,7 @@ abstract class GeneralVector<D extends Dimension> extends CartesianObject<D> imp
 	 * @see ca.jakegreene.util.geometry.Vector#plus(V)
 	 */
 	@Override
-	public Vector<D> add(Vector<? super D> other) {
+	public V add(Vector<? super D> other) {
 		List<Double> components = addToComponents(other);
 		return create(components);
 	}
@@ -35,7 +35,7 @@ abstract class GeneralVector<D extends Dimension> extends CartesianObject<D> imp
 	 * @see ca.jakegreene.util.geometry.Vector#minus(double)
 	 */
 	@Override
-	public Vector<D> subtract(double scalar) {
+	public V subtract(double scalar) {
 		List<Double> components = subtractFromComponents(scalar);
 		return create(components);
 	}
@@ -44,7 +44,7 @@ abstract class GeneralVector<D extends Dimension> extends CartesianObject<D> imp
 	 * @see ca.jakegreene.util.geometry.Vector#minus(V)
 	 */
 	@Override
-	public Vector<D> subtract(Vector<? super D> other) {
+	public V subtract(Vector<? super D> other) {
 		List<Double> components = subtractFromComponents(other);
 		return create(components);
 	}
@@ -53,7 +53,7 @@ abstract class GeneralVector<D extends Dimension> extends CartesianObject<D> imp
 	 * @see ca.jakegreene.util.geometry.Vector#multiply(double)
 	 */
     @Override
-	public Vector<D> multiply(double scalar) {
+	public V multiply(double scalar) {
     	List<Double> components = multiplyWithComponents(scalar);
     	return create(components);
     }
@@ -97,7 +97,7 @@ abstract class GeneralVector<D extends Dimension> extends CartesianObject<D> imp
 	 * @see ca.jakegreene.util.geometry.Vector#normalize()
 	 */
 	@Override
-	public Vector<D> normalize() {
+	public V normalize() {
 		List<Double> components = Lists.newArrayListWithCapacity(size());
 		double magnitude = magnitude();
 		for (int index = 0; index < size(); ++index) {
@@ -107,13 +107,13 @@ abstract class GeneralVector<D extends Dimension> extends CartesianObject<D> imp
 		return create(components);
 	}
 	
-	protected abstract Vector<D> create(List<Double> components);
+	protected abstract V create(List<Double> components);
 	
 	/* (non-Javadoc)
 	 * @see ca.jakegreene.util.geometry.Point#set(int, double)
 	 */
 	@Override
-	public Vector<D> set(int index, double value)
+	public V set(int index, double value)
 			throws IndexOutOfBoundsException {
 		List<Double> components = components();
 		components.set(index, value);
@@ -156,7 +156,7 @@ abstract class GeneralVector<D extends Dimension> extends CartesianObject<D> imp
 
 
 	@Override
-	public Vector<D> copy() {
+	public V copy() {
 		return create(components());
 	}
 }

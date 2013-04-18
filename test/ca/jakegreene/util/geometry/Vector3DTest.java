@@ -22,7 +22,7 @@ public class Vector3DTest extends VectorTest<D3> {
 	public void testAddVectorLowerDimension() {
 		Vector<D2> shifter = Vectors.create2dVector(X, Y);
 		List<Double> scalars = shifter.components();
-		Vector<D3> shifted = vector.add(shifter);
+		Vector3D shifted = vector.add(shifter);
 		
 		String test = "Point Add Smaller Vector";
 		checkShifted(shifted, components, scalars, test);
@@ -36,7 +36,7 @@ public class Vector3DTest extends VectorTest<D3> {
 		Vector<D2> negShifter = shifter.multiply(-1);
 		List<Double> scalars = negShifter.components();
 		
-		Vector<D3> shifted = vector.subtract(shifter);
+		Vector3D shifted = vector.subtract(shifter);
 		
 		String test = "Point Subtract Smaller Vector";
 		checkShifted(shifted, components, scalars, test);
