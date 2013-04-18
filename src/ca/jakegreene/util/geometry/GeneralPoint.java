@@ -6,12 +6,10 @@ import java.util.List;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
-public abstract class GeneralPoint<D extends Dimension> implements Point<D> {
-	
-	private final D dimension;
+abstract class GeneralPoint<D extends Dimension> extends CartesianObject<D> implements Point<D> {
 	
 	public GeneralPoint(D dimension) {
-		this.dimension = dimension;
+		super(dimension);
 	}
 	
 	/* (non-Javadoc)
@@ -19,11 +17,7 @@ public abstract class GeneralPoint<D extends Dimension> implements Point<D> {
 	 */
 	@Override
 	public Point<D> add(double scalar) {
-		List<Double> components = Lists.newArrayListWithCapacity(size());
-		for (int index = 0; index < size(); ++index) {
-			double component = get(index);
-			components.add(index, component + scalar);
-		}
+		List<Double> components = addToComponents(scalar);
 		return create(components);
 	}
 	
@@ -32,12 +26,7 @@ public abstract class GeneralPoint<D extends Dimension> implements Point<D> {
 	 */
 	@Override
 	public Point<D> add(Vector<? super D> other) {
-		List<Double> components = components();
-		for (int index = 0; index < other.size(); ++index) {
-			double thisComponent = this.get(index);
-			double otherComponent = other.get(index);
-			components.set(index, thisComponent + otherComponent);
-		}
+		List<Double> components = addToComponents(other);
 		return create(components);
 	}
 	
@@ -46,7 +35,8 @@ public abstract class GeneralPoint<D extends Dimension> implements Point<D> {
 	 */
 	@Override
 	public Point<D> subtract(double scalar) {
-		return add(-scalar);
+		List<Double> components = subtractFromComponents(scalar);
+		return create(components);
 	}
 	
 	/* (non-Javadoc)
@@ -54,12 +44,7 @@ public abstract class GeneralPoint<D extends Dimension> implements Point<D> {
 	 */
 	@Override
 	public Point<D> subtract(Vector<? super D> other) {
-		List<Double> components = components();
-		for (int index = 0; index < other.size(); ++index) {
-			double thisComponent = this.get(index);
-			double otherComponent = other.get(index);
-			components.set(index, thisComponent - otherComponent);
-		}
+		List<Double> components = subtractFromComponents(other);
 		return create(components);
 	}
 	
@@ -68,11 +53,7 @@ public abstract class GeneralPoint<D extends Dimension> implements Point<D> {
 	 */
 	@Override
 	public Point<D> multiply(double scalar) {
-		List<Double> components = Lists.newArrayListWithCapacity(size());
-		for (int index = 0; index < size(); ++index) {
-			double component = get(index);
-			components.add(component * scalar);
-		}
+		List<Double> components = multiplyWithComponents(scalar);
 		return create(components);
 	}
 	
@@ -89,25 +70,9 @@ public abstract class GeneralPoint<D extends Dimension> implements Point<D> {
 		return createVector(components);
 	}
 	
-	/* (non-Javadoc)
-	 * @see ca.jakegreene.util.geometry.Point#getNumComponents()
-	 */
-	@Override
-	public int size() {
-		return dimension.size();
-	}
-	
-	/* (non-Javadoc)
-	 * @see ca.jakegreene.util.geometry.Point#getComponent(int)
-	 */
-	@Override
-	public double get(int index) throws IndexOutOfBoundsException {
-		return dimension.getComponent(index);
-	}
-	
 	@Override
 	public Point<D> copy() {
-		return create(dimension.getComponents());
+		return create(components());
 	}
 	
 	protected abstract Point<D> create(List<Double> components);
@@ -173,11 +138,6 @@ public abstract class GeneralPoint<D extends Dimension> implements Point<D> {
 			components.add(get(index));
 		}
 		return Objects.hashCode(components);
-	}
-
-	@Override
-	public List<Double> components() {
-		return dimension.getComponents();
 	}
 
 	/* (non-Javadoc)
