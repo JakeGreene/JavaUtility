@@ -7,7 +7,7 @@ package ca.jakegreene.util.geometry;
  *
  * @param <D> The Dimension of the Point
  */
-public interface Point<D extends Dimension> extends CartesianObject<D> {
+public interface Point<D extends Dimension> extends Cartesian<D> {
 
 	/**
 	 * Add this Point to <code>scalar</code> creating a new Point such that

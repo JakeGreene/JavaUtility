@@ -7,7 +7,7 @@ package ca.jakegreene.util.geometry;
  *
  * @param <V>
  */
-public interface Vector<D extends Dimension> extends CartesianObject<D> {
+public interface Vector<D extends Dimension> extends Cartesian<D> {
 
 	/**
 	 * Add the scalar value <code>scalar</code> to this Vector
