@@ -1,4 +1,6 @@
 *.class
-bin/
+/bin/
+/dist/
+/docs/
 .project
 .classpath
