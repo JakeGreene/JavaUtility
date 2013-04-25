@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Util" default="main" basedir=".">
+    
+    <property name="src.dir" location="src" />
+    <property name="build.dir" location="bin" />
+    <property name="dist.dir" location="dist" />
+    <property name="docs.dir" location="docs" />
+    <property name="lib.dir" location="lib" />
+    
+    <property name="version" value="0.1" />
+    <property name="jar.name" value="greene-util-${version}" />
+    
+    <path id="build.classpath">
+    	<fileset dir="${lib.dir}">
+      		<include name="**/*.jar" />
+    	</fileset>
+  	</path>
+    
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+        <delete dir="${docs.dir}"/>
+    </target>
+    
+    <target name="prep">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+        <mkdir dir="${docs.dir}"/>
+    </target>
+    
+    <target name="compile" depends="clean, prep"> 
+        <javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="build.classpath"/>
+    </target>
+    
+    <target name="jar" depends="compile">
+    	<jar destfile="${dist.dir}\${jar.name}" basedir="${build.dir}">
+    	</jar>
+  	</target>
+    
+    <target name="main" depends="compile, jar">
+    	<description>Main target</description>
+  	</target>
+</project>
