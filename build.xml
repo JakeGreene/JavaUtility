@@ -33,12 +33,20 @@
         <javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="build.classpath"/>
     </target>
     
+     <target name="docs" depends="compile">
+	    <javadoc packagenames="src" sourcepath="${src.dir}" destdir="${docs.dir}">
+	       <fileset dir="${src.dir}">
+	                <include name="**" />
+	           </fileset>
+	    </javadoc>
+  	</target>
+    
     <target name="jar" depends="compile">
     	<jar destfile="${dist.dir}\${jar.name}" basedir="${build.dir}">
     	</jar>
   	</target>
     
-    <target name="main" depends="compile, jar">
+    <target name="main" depends="compile, jar, docs">
     	<description>Main target</description>
   	</target>
 </project>
