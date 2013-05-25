@@ -1,0 +1,251 @@
+package ca.jakegreene.util.random;
+
+import java.util.Random;
+
+import ca.jakegreene.util.math.MathHelper;
+
+public class DiamondSquareGenerator {
+	
+	private final Random gen;
+	
+	DiamondSquareGenerator() {
+		gen = new Random();
+	}
+	
+	DiamondSquareGenerator(int seed) {
+		gen = new Random(seed);
+	}
+	
+	/**
+	 * Create a noise map with size (width x width) 
+	 * @param width Must be equal to (2^n) + 1 for some n > 0
+	 * @return a (width x width) array of floats in the range [0, 1]
+	 */
+	float[][] createNoiseMap(int width) throws IllegalArgumentException {
+		if (width <= 0) {
+			throw new IllegalArgumentException("Width must be larger than 0");
+		}
+		if (!MathHelper.isPowerOfTwo(width-1)) {
+			throw new IllegalArgumentException("Width must be equal to 2^n + 1 for some n");
+		}
+		
+		float[][] noise = new float[width][width];
+		// Seed the map with data at the far corners
+		noise[0][0] = weightedRandom(width);
+		noise[0][width-1] = weightedRandom(width);
+		noise[width-1][0] = weightedRandom(width);
+		noise[width-1][width-1] = weightedRandom(width);
+		
+		/*
+		 * Iteratively apply the diamond-square algorithm.
+		 * Doing this iteratively removes line artifacts
+		 * by providing corner data to the 'square' step 
+		 * which is created during the 'diamond' step
+		 */
+		int curWidth = width;
+		while (curWidth > 2) {	
+			applyDiamond(noise, curWidth);
+			applySquare(noise, curWidth);		
+			// Halve the width
+			curWidth = (curWidth/2) + 1;
+		}
+		normalizeData(noise);
+		return noise;
+	}
+	
+	/*
+	 * Determine the value of the centre points of each (width x width)
+	 * subsection
+	 * 
+	 * eg. section with width 5
+	 * x . . . x
+	 * . . . . .
+	 * . . o . .
+	 * . . . . .
+	 * x . . . x
+	 * 
+	 * eg. iterative application to a 5x5 map with section width 3
+	 * will find 4 values using a total of 9 "corners"
+	 * x . x . x
+	 * . o . o .
+	 * x . x . x
+	 * . o . o .
+	 * x . x . x
+	 */
+	private void applyDiamond(float[][] noise, int width) {
+		// Perform the 'Diamond' step for each block
+		for (int x = 0; x < noise.length - 1; x += (width - 1)) {
+			for (int z = 0; z < noise[0].length - 1; z += (width - 1)) {
+				int lastX = x + width - 1;
+				int lastZ = z + width - 1;
+
+				int midX = (x + lastX) / 2;
+				int midZ = (z + lastZ) / 2;
+
+				/* 
+				 * "Diamond" step. Set the middle of this block
+				 * to the average of the corners of this block
+				 * 
+				 */
+				noise[midX][midZ] = (noise[x][z] + noise[x][lastZ]
+						+ noise[lastX][z] + noise[lastX][lastZ]) / 4;
+				noise[midX][midZ] = noise[midX][midZ] + weightedRandom(width);
+			}
+		}
+	}
+	
+	/*
+	 * Determine the edge values by finding the diamond averages around each
+	 * edge point
+	 * 
+	 * eg. section with width 5
+	 * . . x . .
+	 * . . . . .
+	 * x . o . x
+	 * . . . . .
+	 * . . x . .
+	 * 
+	 * eg. edge section with width 5.
+	 * The value to be found is on an edge so it will use
+	 * the reference value on other side of the map. In this case,
+	 * the reference value X is being used twice.
+	 * x . . . .
+	 * . . . . .
+	 * o . X . .
+	 * . . . . .
+	 * x . . . .
+	 * 
+	 * eg iterative application to a 5x5 map with section width 3.
+	 * 6 values are determined (the o's) using 9 "corners" (the x's).
+	 * Some of the corners are used multiple times because of wrapping.
+	 * x . x . x
+	 * o x o x o
+	 * x . x . x
+	 * o x o x o
+	 * x . x . x
+	 */
+	private void applySquare(float[][] noise, int width) {
+		// Perform the 'Square' step for each block
+		for (int x = 0; x < noise.length - 1; x += (width - 1)) {
+			for (int z = 0; z < noise[0].length - 1; z += (width - 1)) {
+				int lastX = x + width - 1;
+				int lastZ = z + width - 1;
+
+				int midX = (x + lastX) / 2;
+				int midZ = (z + lastZ) / 2;
+
+				noise[x][midZ] = diamondAverage(noise, x, midZ, width)
+						+ weightedRandom(width);
+				noise[midX][z] = diamondAverage(noise, midX, z, width)
+						+ weightedRandom(width);
+				noise[lastX][midZ] = diamondAverage(noise, lastX, midZ,
+						width) + weightedRandom(width);
+				noise[midX][lastZ] = diamondAverage(noise, midX, lastZ,
+						width) + weightedRandom(width);
+			}
+		}
+	}
+	
+	/*
+	 * Create a pseudo-random number in the range 
+	 * [-weight/2, weight/2)
+	 */
+	private float weightedRandom(int weight) {
+		return (float)(gen.nextFloat() * (-weight) + (weight/2.0));
+	}
+	
+	/*
+	 * Find the average value of the corners of the diamond surrounding (x, y)
+	 * 
+	 * . x .
+	 * x o x
+	 * . x .
+	 * 
+	 * Where o is the point (x, y) and each x is a point <code>(width-1)/2</code> distance
+	 * from o.
+	 */
+	private float diamondAverage(float[][] noise, int x, int y, int width) {
+		int delta = (width - 1) / 2;
+		
+		/* 
+		 * There may not be a mid X/Z to look at
+		 * if we are on the edge of the height map.
+		 * In this case we will "wrap" and consider
+		 * the other side of the grid. This wrap will
+		 * be slightly offset in order to use a known 
+		 * reference value (a proper wrap would try to
+		 * use a yet-to-be-calculated value)
+		 * 
+		 * A "proper" wrap. Note how the wrapped value (w)
+		 * is in the edge and is therefore not yet calculated
+		 * x . . . .
+		 * o x . . w
+		 * x . . . .
+		 * . . . . .
+		 * . . . . .
+		 * 
+		 * The wrap used by this method. The wrapped value
+		 * (w) is a centre value in a previous step and has
+		 * therefore already been calculated
+		 * 
+		 * x . . . .
+		 * o x . w .
+		 * x . . . .
+		 * . . . . .
+		 * . . . . .
+		 */
+		
+		int midLeftX = x - delta;
+		if (x == 0) {
+			// Use the right hand side
+			midLeftX = noise.length - 1 - delta;
+		}
+			
+		int midRightX = x + delta;
+		if (x == noise.length - 1) {
+			// Use the left hand side
+			midRightX = delta;
+		}
+		
+		int midTopY = y - delta;
+		if (y == 0) {
+			// Use the bottom
+			midTopY = noise[0].length - 1 - delta;
+		}
+		
+		int midBottomY = y + delta;
+		if (y == noise[0].length - 1) {
+			// Use the top
+			midBottomY = delta;
+		}
+		
+		float average = (noise[x][midTopY] + noise[midRightX][y] + noise[x][midBottomY] + noise[midLeftX][y]) / 4;
+		return average;
+	}
+	
+	/*
+	 * Convert the values of the given noise map
+	 * so that they are in the range [0, 1]
+	 */
+	private void normalizeData(float[][] noise) {
+		float lowest = Float.MAX_VALUE;
+		float highest = Float.MIN_VALUE;
+		for (int x = 0; x < noise.length; ++x) {
+			for (int y = 0; y < noise[0].length; ++y) {
+				if (noise[x][y] < lowest) {
+					lowest = noise[x][y];
+				}
+				if (noise[x][y] > highest) {
+					highest = noise[x][y];
+				}
+			}
+		}
+		
+		for (int x = 0; x < noise.length; ++x) {
+			for (int y = 0; y < noise[0].length; ++y) {
+				noise[x][y] = (noise[x][y] - lowest) / (highest - lowest);
+			}
+		}
+		
+	}
+}
