@@ -32,10 +32,10 @@ public class DiamondSquareGenerator {
 		float[][] noise = new float[width][width];
 		
 		/*
-		 * The methods within DiamondSquareGenerator
+		 * The methods within
 		 * modify the data directly instead of returning 
 		 * a new 2D array of data. This goes against common
-		 * (and my preferred) coding styles but is necessary given 
+		 * (and my preferred) coding style but is necessary given 
 		 * the potential size of the noise array.
 		 */
 		
@@ -47,7 +47,7 @@ public class DiamondSquareGenerator {
 		 * calculating the diamond averages during the 
 		 * square step because the diamond step will
 		 * have been performed for all subsections
-		 * with width 'currentWidth'
+		 * of width 'currentWidth'
 		 */
 		int currentWidth = width;
 		while (currentWidth > 2) {	
@@ -67,7 +67,7 @@ public class DiamondSquareGenerator {
 			 */
 			currentWidth = (currentWidth/2) + 1;
 		}
-		normalizeData(noise);
+		MathHelper.normalizeInPlace(noise);
 		return noise;
 	}
 	
@@ -159,7 +159,7 @@ public class DiamondSquareGenerator {
 	 * x o x o x
 	 */
 	private void applySquare(float[][] noise, int width) {
-		// Perform the 'Square' step for each block
+		// Perform the 'Square' step for each (width x width) block
 		for (int firstX = 0; firstX < noise.length - 1; firstX += (width - 1)) {
 			for (int firstY = 0; firstY < noise[0].length - 1; firstY += (width - 1)) {
 				int lastX = firstX + width - 1;
@@ -199,7 +199,7 @@ public class DiamondSquareGenerator {
 		 * use a yet-to-be-calculated value)
 		 * 
 		 * A "proper" wrap. Note how the wrapped value (w)
-		 * is on the edge and is therefore not yet calculated
+		 * is on the edge and has therefore not yet calculated
 		 * x . . . .
 		 * o x . . w
 		 * x . . . .
@@ -251,31 +251,5 @@ public class DiamondSquareGenerator {
 	 */
 	private float weightedRandom(int weight) {
 		return (float)(gen.nextFloat() * (-weight) + (weight/2.0));
-	}
-	
-	/**
-	 * Convert the values of the given noise map
-	 * so that they are in the range [0, 1]
-	 */
-	private void normalizeData(float[][] noise) {
-		float lowest = Float.MAX_VALUE;
-		float highest = Float.MIN_VALUE;
-		for (int x = 0; x < noise.length; ++x) {
-			for (int y = 0; y < noise[0].length; ++y) {
-				if (noise[x][y] < lowest) {
-					lowest = noise[x][y];
-				}
-				if (noise[x][y] > highest) {
-					highest = noise[x][y];
-				}
-			}
-		}
-		
-		for (int x = 0; x < noise.length; ++x) {
-			for (int y = 0; y < noise[0].length; ++y) {
-				noise[x][y] = (noise[x][y] - lowest) / (highest - lowest);
-			}
-		}
-		
 	}
 }
