@@ -65,6 +65,7 @@ public class MathHelper {
 		} else {
 			for (int x = 0; x < data.length; ++x) {
 				for (int y = 0; y < data[0].length; ++y) {
+					// FIXME This does not work for very large 'highest' with very low 'lowest'
 					data[x][y] = (data[x][y] - lowest) / (highest - lowest);
 				}
 			}

@@ -6,6 +6,8 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import ca.jakegreene.util.collection.ArrayHelper;
+
 public class MathHelperTest {
 	
 	private static float DELTA = 0.01f;
@@ -14,14 +16,9 @@ public class MathHelperTest {
 	public void testNormalizeInPlace() {
 		int length = 2;
 		int width = 2;
-		float[][] data = new float[length][width];
-		for (int x = 0; x < data.length; ++x) {
-			for (int y = 0; y < data[0].length; ++y) {
-				data[x][y] = x + y;
-			}
-		}
-		float largestValue = (length - 1) + (width - 1);
-		float smallestValue = 0;
+		float[][] data = createTestData(width, length);
+		float largestValue = ArrayHelper.max(data);
+		float smallestValue = ArrayHelper.min(data);
 		
 		MathHelper.normalizeInPlace(data);
 		
@@ -39,10 +36,7 @@ public class MathHelperTest {
 		int length = 2;
 		int width = 2;
 		float val = 0.314569f;
-		float[][] data = new float[length][width];
-		for (int i = 0; i < data.length; ++i) {
-			Arrays.fill(data[i], val);
-		}
+		float[][] data = createConstantData(width, length, val);
 		
 		MathHelper.normalizeInPlace(data);
 		
@@ -58,15 +52,10 @@ public class MathHelperTest {
 	public void testNormalizeData() {
 		int length = 2;
 		int width = 2;
-		float[][] data = new float[length][width];
-		for (int x = 0; x < data.length; ++x) {
-			for (int y = 0; y < data[0].length; ++y) {
-				data[x][y] = x + y;
-			}
-		}
+		float[][] data = createTestData(width, length);
 		
-		float largestValue = (length - 1) + (width - 1);
-		float smallestValue = 0;
+		float largestValue = ArrayHelper.max(data);
+		float smallestValue = ArrayHelper.min(data);
 		
 		float[][] normalized = MathHelper.normalizeData(data); 
 		for (int x = 0; x < normalized.length; ++x) {
@@ -89,10 +78,7 @@ public class MathHelperTest {
 		int length = 2;
 		int width = 2;
 		float val = 0.314569f;
-		float[][] data = new float[length][width];
-		for (int x = 0; x < data.length; ++x) {
-			Arrays.fill(data[x], val);
-		}
+		float[][] data = createConstantData(width, length, val);
 		
 		float[][] normalized = MathHelper.normalizeData(data); 
 		for (int x = 0; x < normalized.length; ++x) {
@@ -106,6 +92,24 @@ public class MathHelperTest {
 				assertEquals("Normalize Constant Data. Original Data Unchanged", val, data[x][y], DELTA);
 			}
 		}
+	}
+	
+	private float[][] createConstantData(int width, int length, float val) {
+		float[][] data = new float[length][width];
+		for (int x = 0; x < data.length; ++x) {
+			Arrays.fill(data[x], val);
+		}
+		return data;
+	}
+	
+	private float[][] createTestData(int width, int length) {
+		float[][] data = new float[length][width];
+		for (int x = 0; x < data.length; ++x) {
+			for (int y = 0; y < data[0].length; ++y) {
+				data[x][y] = x + y;
+			}
+		}
+		return data;
 	}
 
 }
