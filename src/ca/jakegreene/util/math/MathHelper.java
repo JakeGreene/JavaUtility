@@ -1,6 +1,6 @@
 package ca.jakegreene.util.math;
 
-import java.util.Arrays;
+import ca.jakegreene.util.collection.ArrayHelper;
 
 public class MathHelper {
 	private MathHelper() {}
@@ -30,10 +30,7 @@ public class MathHelper {
 	 * @return normalized data
 	 */
 	public static float[][] normalizeData(float[][] data) {
-		float[][] normalized = new float[data.length][data[0].length];
-		for (int i = 0; i < data.length; ++i) {
-			normalized[i] = Arrays.copyOf(data[i], data[i].length);
-		}	
+		float[][] normalized = data.clone();	
 		normalizeInPlace(normalized);
 		return normalized;
 	}
@@ -45,23 +42,11 @@ public class MathHelper {
 	 * @param data The data to normalize and the array to store the results in
 	 */
 	public static void normalizeInPlace(float[][] data) {
-		float lowest = Float.MAX_VALUE;
-		float highest = Float.MIN_VALUE;
-		for (int x = 0; x < data.length; ++x) {
-			for (int y = 0; y < data[0].length; ++y) {
-				if (data[x][y] < lowest) {
-					lowest = data[x][y];
-				}
-				if (data[x][y] > highest) {
-					highest = data[x][y];
-				}
-			}
-		}
+		float lowest = ArrayHelper.min(data);
+		float highest = ArrayHelper.max(data);
 		
 		if (highest == lowest) {
-			for (int i = 0; i < data.length; ++i) {
-				Arrays.fill(data[i], 1.0f);	
-			}
+			ArrayHelper.fillInPlace(data, 1.0f);
 		} else {
 			for (int x = 0; x < data.length; ++x) {
 				for (int y = 0; y < data[0].length; ++y) {
