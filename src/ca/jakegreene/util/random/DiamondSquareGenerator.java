@@ -1,19 +1,17 @@
 package ca.jakegreene.util.random;
 
-import java.util.Random;
-
 import ca.jakegreene.util.math.MathHelper;
 
 public class DiamondSquareGenerator {
 	
-	private final Random gen;
+	private final RandomGenerator gen;
 	
 	DiamondSquareGenerator() {
-		gen = new Random();
+		gen = new RandomGenerator();
 	}
 	
 	DiamondSquareGenerator(int seed) {
-		gen = new Random(seed);
+		gen = new RandomGenerator(seed);
 	}
 	
 	/**
@@ -250,6 +248,7 @@ public class DiamondSquareGenerator {
 	 * (-weight/2, weight/2]
 	 */
 	private float weightedRandom(int weight) {
-		return (float)(gen.nextFloat() * (-weight) + (weight/2.0));
+		float halfWeight  = weight / 2.0f;
+		return gen.nextFloatInRange(-halfWeight, halfWeight);
 	}
 }

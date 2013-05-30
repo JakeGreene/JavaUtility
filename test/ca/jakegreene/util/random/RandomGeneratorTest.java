@@ -9,6 +9,17 @@ public class RandomGeneratorTest {
 	RandomGenerator gen = new RandomGenerator();
 
 	@Test
+	public void testSameSeed() {
+		long seed = 5279; // Prime
+		RandomGenerator seeded = new RandomGenerator(seed);
+		RandomGenerator sameSeeded = new RandomGenerator(seed);
+		
+		for (int i = 0; i < 100; ++i) {
+			assertEquals("RandomGenerator Same Seed => Same Value", seeded.nextInt(), sameSeeded.nextInt());	
+		}
+	}
+	
+	@Test
 	public void testDoubleInRangeMax() {
 		// Test if there is overflow
 		double randDouble = gen.nextDoubleInRange(-Double.MAX_VALUE, Double.MAX_VALUE);

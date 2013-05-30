@@ -4,6 +4,12 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Random;
 
+/**
+ * A random number generator that extends the functionality of
+ * Java's Random
+ * @author jakegreene
+ *
+ */
 public class RandomGenerator extends Random {
 
 	private static final long serialVersionUID = -3605698391753745979L;
