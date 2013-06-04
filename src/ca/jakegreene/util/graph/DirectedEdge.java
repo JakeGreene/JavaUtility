@@ -61,5 +61,20 @@ public final class DirectedEdge<V> extends AbstractEdge<V> {
 	static <V> DirectedEdge<V> newWeightedBidirectionalEdge(V source, V destination, double weight) {
 		return new DirectedEdge<V>(source, destination, true);
 	}
+	
+	public static class Factory<V> implements EdgeFactory<V, DirectedEdge<V>> {
 
+		@Override
+		public DirectedEdge<V> createEdge(V source, V destination) {
+			return DirectedEdge.newEdge(source, destination);
+		}
+	}
+	
+	public static class BidirectionalFactory<V> implements EdgeFactory<V, DirectedEdge<V>> {
+
+		@Override
+		public DirectedEdge<V> createEdge(V source, V destination) {
+			return DirectedEdge.newBidirectionalEdge(source, destination);
+		}
+	}
 }

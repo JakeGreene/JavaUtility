@@ -38,4 +38,12 @@ public final class SimpleEdge<V> extends AbstractEdge<V> {
 	static <V> SimpleEdge<V> newWeightedEdge(V source, V destination, double weight) {
 		return new SimpleEdge<V>(source, destination, weight);
 	}
+	
+	public static class Factory<V> implements EdgeFactory<V, SimpleEdge<V>> {
+
+		@Override
+		public SimpleEdge<V> createEdge(V source, V destination) {
+			return SimpleEdge.newEdge(source, destination);
+		}
+	}
 }
