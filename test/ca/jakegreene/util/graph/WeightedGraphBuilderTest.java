@@ -5,19 +5,14 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-public class WeightedGraphBuilderTest extends SimpleGraphBuilderTest {
+public class WeightedGraphBuilderTest extends GraphBuilderTest<SimpleEdge<String>> {
 	
 	private SimpleGraph.WeightedBuilder<String, SimpleEdge<String>> builder = SimpleGraph.weightedBuilder();
-
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		setBuilder(SimpleGraph.<String>weightedBuilder());
-	}
 	
-	protected void setBuilder(SimpleGraph.WeightedBuilder<String, SimpleEdge<String>> builder) {
-		this.builder = builder;
-		super.setBuilder(builder);
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+		builder = createBuilder();
 	}
 	
 	@Test
@@ -31,6 +26,11 @@ public class WeightedGraphBuilderTest extends SimpleGraphBuilderTest {
 		Graph<String, SimpleEdge<String>> graph = builder.build();
 		assertTrue("Weighted Graph Builder. Can add a weighted edge between two existing vertices", graph.containsEdge(source, destination));
 		assertTrue("Weighted Graph Builder. Added weight is retained", graph.getEdge(source, destination).get().weight() == weight);
+	}
+
+	@Override
+	protected SimpleGraph.WeightedBuilder<String, SimpleEdge<String>> createBuilder() {
+		return SimpleGraph.weightedBuilder();
 	}
 
 }

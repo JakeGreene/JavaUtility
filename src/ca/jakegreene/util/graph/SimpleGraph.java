@@ -106,6 +106,10 @@ public class SimpleGraph<V, E extends Edge<V>> implements Graph<V, E> {
 		return WeightedBuilder.startGraph();
 	}
 	
+	public static <V> DirectedBuilder<V> directedBuilder() {
+		return DirectedBuilder.startDirectedGraph();
+	}
+	
 	public static class Builder<V, E extends Edge<V>> implements GraphBuilder<V, E>{
 		
 		protected Set<E> edges;
@@ -147,13 +151,15 @@ public class SimpleGraph<V, E extends Edge<V>> implements Graph<V, E> {
 		 * @param destination
 		 */
 		@Override
-		public void addEdge(V source, V destination) {
+		public void addEdge(V source, V destination) throws EdgeLoopException {
+			if (source.equals(destination)) throw new EdgeLoopException();
 			vertices.add(source);
 			vertices.add(destination);
 			edges.add(factory.createEdge(source, destination));
 		}
 		
-		protected void addEdge(E edge) {
+		protected void addEdge(E edge) throws EdgeLoopException {
+			if (edge.source().equals(edge.destination())) throw new EdgeLoopException();
 			edges.add(edge);
 		}
 		
@@ -182,6 +188,22 @@ public class SimpleGraph<V, E extends Edge<V>> implements Graph<V, E> {
 			addEdge(factory.createEdge(source, destination, weight));
 		}
 		
+	}
+	
+	public static class DirectedBuilder<V> extends Builder<V, DirectedEdge<V>> {
+		public DirectedBuilder() {
+			super(new DirectedEdge.Factory<V>());
+		}
+		
+		public static <V> DirectedBuilder<V> startDirectedGraph() {
+			return new DirectedBuilder<V>();
+		}
+		
+		public void addBidirectionalEdge(V source, V destination) {
+			addVertex(source);
+			addVertex(destination);
+			addEdge(factory.createBidirectionalEdge(source, destination));
+		}
 	}
 
 }
