@@ -58,6 +58,12 @@ public class DirectedEdgeTest {
 		DirectedEdge<String> biEdge = DirectedEdge.newBidirectionalEdge(destination, source);
 		assertFalse("Directed Edge. Directed Edge (A -> B) does not equal (A <-> B)", testEdge.equals(biEdge));
 	}
+	
+	@Test
+	public void testEqualEdgeSameHashCode() {
+		DirectedEdge<String> copy = DirectedEdge.newEdge(source, destination);
+		assertTrue("Directed Edge. Equal Edge => Same Hash", testEdge.hashCode() == copy.hashCode());
+	}
 
 	@Test
 	public void testDoesNotEqualNull() {

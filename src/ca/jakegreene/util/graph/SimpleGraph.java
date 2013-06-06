@@ -102,15 +102,19 @@ public class SimpleGraph<V, E extends Edge<V>> implements Graph<V, E> {
 		return Builder.startGraph();
 	}
 	
-	public static class Builder<V, E extends Edge<V>> {
+	public static <V> WeightedBuilder<V, SimpleEdge<V>> weightedBuilder() {
+		return WeightedBuilder.startGraph();
+	}
+	
+	public static class Builder<V, E extends Edge<V>> implements GraphBuilder<V, E>{
 		
-		private ImmutableTable.Builder<V, V, E> builder;
-		private Set<V> vertices;
-		private final EdgeFactory<V, E> factory;
+		protected Set<E> edges;
+		protected Set<V> vertices;
+		protected final EdgeFactory<V, E> factory;
 		
 		public Builder(EdgeFactory<V, E> factory) {
-			builder = ImmutableTable.builder();
 			vertices = Sets.newHashSet();
+			edges = Sets.newHashSet();
 			this.factory = factory;
 		}
 		
@@ -118,16 +122,19 @@ public class SimpleGraph<V, E extends Edge<V>> implements Graph<V, E> {
 			return new Builder<V, SimpleEdge<V>>(new SimpleEdge.Factory<V>());
 		}
 		
+		@Override
 		public void addVertices(Iterable<V> vertices) {
 			addVertices(vertices.iterator());
 		}
 		
+		@Override
 		public void addVertices(Iterator<V> vertices) {
 			while (vertices.hasNext()) {
 				addVertex(vertices.next());
 			}
 		}
 		
+		@Override
 		public void addVertex(V vertex) {
 			vertices.add(vertex);
 		}
@@ -139,15 +146,42 @@ public class SimpleGraph<V, E extends Edge<V>> implements Graph<V, E> {
 		 * @param source
 		 * @param destination
 		 */
+		@Override
 		public void addEdge(V source, V destination) {
-			builder.put(source, destination, factory.createEdge(source, destination));
 			vertices.add(source);
 			vertices.add(destination);
+			edges.add(factory.createEdge(source, destination));
+		}
+		
+		protected void addEdge(E edge) {
+			edges.add(edge);
 		}
 		
 		public SimpleGraph<V, E> build() {
+			ImmutableTable.Builder<V, V, E> builder = ImmutableTable.builder();
+			for (E edge : edges) {
+				builder.put(edge.source(), edge.destination(), edge);
+			}
 			return new SimpleGraph<V, E>(builder.build(), vertices);
 		}
+	}
+	
+	public static class WeightedBuilder<V, E extends Edge<V>> extends Builder<V, E> {
+
+		public WeightedBuilder(EdgeFactory<V, E> factory) {
+			super(factory);
+		}
+		
+		public static <V> WeightedBuilder<V, SimpleEdge<V>> startGraph() {
+			return new WeightedBuilder<V, SimpleEdge<V>>(new SimpleEdge.Factory<V>());
+		}
+		
+		public void addEdge(V source, V destination, double weight) {
+			addVertex(source);
+			addVertex(destination);
+			addEdge(factory.createEdge(source, destination, weight));
+		}
+		
 	}
 
 }

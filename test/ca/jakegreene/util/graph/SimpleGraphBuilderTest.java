@@ -10,11 +10,15 @@ import org.junit.Test;
 
 public class SimpleGraphBuilderTest {
 	
-	SimpleGraph.Builder<String, SimpleEdge<String>> builder;
+	private SimpleGraph.Builder<String, SimpleEdge<String>> builder;
 
 	@Before
 	public void setUp() throws Exception {
-		builder = SimpleGraph.builder();
+		setBuilder(SimpleGraph.<String>builder());
+	}
+	
+	protected void setBuilder(SimpleGraph.Builder<String, SimpleEdge<String>> builder) {
+		this.builder = builder;
 	}
 
 	@Test
@@ -24,6 +28,16 @@ public class SimpleGraphBuilderTest {
 		Graph<String, SimpleEdge<String>> graph = builder.build();
 		assertTrue("Simple Graph Builder. Can add a vertex", graph.containsVertex(vertex));
 		assertTrue("Simple Graph Builder. Adding only vertices creates no edges", graph.edges().isEmpty());
+	}
+	
+	@Test
+	public void testAddDuplicateVertices() {
+		String vertex = "V1";
+		String copy = "V1";
+		builder.addVertex(vertex);
+		builder.addVertex(copy);
+		Graph<String, SimpleEdge<String>> graph = builder.build();
+		assertTrue("Simple Graph Builder. Adding duplicates only keeps one", graph.vertices().size() == 1);
 	}
 	
 	@Test
@@ -65,6 +79,17 @@ public class SimpleGraphBuilderTest {
 		Graph<String, SimpleEdge<String>> graph = builder.build();
 		assertTrue("Simple Graph Builder. Can add an edge between two non-existing vertices", graph.containsEdge(source, destination));
 		assertTrue("Simple Graph Builder. Adding edge between new vertices adds the vertices", graph.containsVertex(source) && graph.containsVertex(destination));
+	}
+	
+	@Test
+	public void testAddDuplicateEdge() {
+		String source = "V1";
+		String destination = "V2";
+		builder.addEdge(source, destination);
+		builder.addEdge(source, destination);
+		Graph<String, SimpleEdge<String>> graph = builder.build();
+		assertTrue("Simple Graph Builder. Duplicate Edge is dropped", graph.getEdges(source).size() == 1);
+		assertTrue("Simple Graph Builder. Duplicate Edge is dropped", graph.getEdges(destination).size() == 1);
 	}
 
 }

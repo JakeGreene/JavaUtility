@@ -1,5 +1,7 @@
 package ca.jakegreene.util.graph;
 
+import com.google.common.primitives.Doubles;
+
 
 public final class SimpleEdge<V> extends AbstractEdge<V> {
 	private SimpleEdge(V source, V destination) {
@@ -31,6 +33,11 @@ public final class SimpleEdge<V> extends AbstractEdge<V> {
 		return false;
 	}
 	
+	@Override
+	public int hashCode() {
+		return source().hashCode() + destination().hashCode() + Doubles.hashCode(weight());
+	}
+	
 	static <V> SimpleEdge<V> newEdge(V source, V destination) {
 		return new SimpleEdge<V>(source, destination);
 	}
@@ -44,6 +51,22 @@ public final class SimpleEdge<V> extends AbstractEdge<V> {
 		@Override
 		public SimpleEdge<V> createEdge(V source, V destination) {
 			return SimpleEdge.newEdge(source, destination);
+		}
+
+		@Override
+		public SimpleEdge<V> createEdge(V source, V destination, double weight) {
+			return SimpleEdge.newWeightedEdge(source, destination, weight);
+		}
+
+		@Override
+		public SimpleEdge<V> createBidirectionalEdge(V source, V destination) {
+			return SimpleEdge.newEdge(source, destination);
+		}
+
+		@Override
+		public SimpleEdge<V> createBidirectionalEdge(V source, V destination,
+				double weight) {
+			return SimpleEdge.newWeightedEdge(source, destination, weight);
 		}
 	}
 }

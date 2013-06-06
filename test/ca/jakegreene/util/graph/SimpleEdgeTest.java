@@ -68,6 +68,20 @@ public class SimpleEdgeTest {
 	}
 	
 	@Test
+	public void testEqualHashes() {
+		SimpleEdge<String> edge = SimpleEdge.newEdge(source, destination);
+		SimpleEdge<String> diffEdge = SimpleEdge.newEdge(destination, source);
+		assertTrue("Simple Edge. Edges that equal eachother have the same hash", edge.hashCode() == diffEdge.hashCode());
+	}
+	
+	@Test
+	public void testSimpleAndDirectedEqualHashes() {
+		SimpleEdge<String> simpleEdge = SimpleEdge.newEdge(source, destination);
+		DirectedEdge<String> directedEdge = DirectedEdge.newBidirectionalEdge(source, destination);
+		assertTrue("Simple Edge. Simple Edges that equal Directed Edges have the same hash", simpleEdge.hashCode() == directedEdge.hashCode());
+	}
+	
+	@Test
 	public void testDefaultWeightIsOne() {
 		assertEquals("Simple Edge. Default edge weight is 1.0", 1.0, testEdge.weight(), 0.01);
 	}

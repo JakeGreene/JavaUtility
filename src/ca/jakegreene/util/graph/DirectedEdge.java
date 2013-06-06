@@ -1,6 +1,7 @@
 package ca.jakegreene.util.graph;
 
 import com.google.common.base.Objects;
+import com.google.common.primitives.Doubles;
 
 public final class DirectedEdge<V> extends AbstractEdge<V> {
 	
@@ -46,6 +47,15 @@ public final class DirectedEdge<V> extends AbstractEdge<V> {
 		return false;
 	}
 	
+	@Override
+	public int hashCode() {
+		if (bidirectional) {
+			return source().hashCode() + destination().hashCode() + Doubles.hashCode(weight());
+		} else {
+			return Objects.hashCode(source(), destination(), weight());
+		}
+	}
+	
 	static <V> DirectedEdge<V> newEdge(V source, V destination) {
 		return new DirectedEdge<V>(source, destination, false);
 	}
@@ -68,13 +78,21 @@ public final class DirectedEdge<V> extends AbstractEdge<V> {
 		public DirectedEdge<V> createEdge(V source, V destination) {
 			return DirectedEdge.newEdge(source, destination);
 		}
-	}
-	
-	public static class BidirectionalFactory<V> implements EdgeFactory<V, DirectedEdge<V>> {
 
 		@Override
-		public DirectedEdge<V> createEdge(V source, V destination) {
+		public DirectedEdge<V> createEdge(V source, V destination, double weight) {
+			return DirectedEdge.newWeightedEdge(source, destination, weight);
+		}
+
+		@Override
+		public DirectedEdge<V> createBidirectionalEdge(V source, V destination) {
 			return DirectedEdge.newBidirectionalEdge(source, destination);
+		}
+
+		@Override
+		public DirectedEdge<V> createBidirectionalEdge(V source, V destination,
+				double weight) {
+			return DirectedEdge.newWeightedBidirectionalEdge(source, destination, weight);
 		}
 	}
 }
