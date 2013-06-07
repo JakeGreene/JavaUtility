@@ -110,6 +110,10 @@ public class SimpleGraph<V, E extends Edge<V>> implements Graph<V, E> {
 		return DirectedBuilder.startDirectedGraph();
 	}
 	
+	public static <V> WeightedDirectedBuilder<V> weightedDirectedBuilder() {
+		return WeightedDirectedBuilder.startDirectedGraph();
+	}
+	
 	public static class Builder<V, E extends Edge<V>> implements GraphBuilder<V, E>{
 		
 		protected Set<E> edges;
@@ -172,7 +176,7 @@ public class SimpleGraph<V, E extends Edge<V>> implements Graph<V, E> {
 		}
 	}
 	
-	public static class WeightedBuilder<V, E extends Edge<V>> extends Builder<V, E> {
+	public static class WeightedBuilder<V, E extends Edge<V>> extends Builder<V, E> implements WeightedGraphBuilder<V, E> {
 
 		public WeightedBuilder(EdgeFactory<V, E> factory) {
 			super(factory);
@@ -182,6 +186,7 @@ public class SimpleGraph<V, E extends Edge<V>> implements Graph<V, E> {
 			return new WeightedBuilder<V, SimpleEdge<V>>(new SimpleEdge.Factory<V>());
 		}
 		
+		@Override
 		public void addEdge(V source, V destination, double weight) {
 			addVertex(source);
 			addVertex(destination);
@@ -190,7 +195,7 @@ public class SimpleGraph<V, E extends Edge<V>> implements Graph<V, E> {
 		
 	}
 	
-	public static class DirectedBuilder<V> extends Builder<V, DirectedEdge<V>> {
+	public static class DirectedBuilder<V> extends Builder<V, DirectedEdge<V>> implements DirectedGraphBuilder<V> {
 		public DirectedBuilder() {
 			super(new DirectedEdge.Factory<V>());
 		}
@@ -199,10 +204,31 @@ public class SimpleGraph<V, E extends Edge<V>> implements Graph<V, E> {
 			return new DirectedBuilder<V>();
 		}
 		
+		@Override
 		public void addBidirectionalEdge(V source, V destination) {
 			addVertex(source);
 			addVertex(destination);
 			addEdge(factory.createBidirectionalEdge(source, destination));
+		}
+	}
+	
+	public static class WeightedDirectedBuilder<V> extends DirectedBuilder<V> implements WeightedGraphBuilder<V, DirectedEdge<V>> {
+		
+		@Override
+		public void addEdge(V source, V destination, double weight) {
+			addVertex(source);
+			addVertex(destination);
+			addEdge(factory.createEdge(source, destination, weight));
+		}
+		
+		public void addBidirectionalEdge(V source, V destination, double weight) {
+			addVertex(source);
+			addVertex(destination);
+			addEdge(factory.createBidirectionalEdge(source, destination, weight));
+		}
+		
+		public static <V> WeightedDirectedBuilder<V> startDirectedGraph() {
+			return new WeightedDirectedBuilder<V>();
 		}
 	}
 
