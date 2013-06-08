@@ -8,7 +8,7 @@
     <property name="docs.dir" location="docs" />
     <property name="lib.dir" location="lib" />
     
-    <property name="version" value="0.1" />
+    <property name="version" value="0.15" /> <!-- 0.15 Has the start of Graphs -->
     <property name="jar.name" value="greene-util-${version}" />
     
     <path id="build.classpath">
