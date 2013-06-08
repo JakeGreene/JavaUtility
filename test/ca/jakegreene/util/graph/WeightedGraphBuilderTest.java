@@ -23,7 +23,7 @@ public class WeightedGraphBuilderTest extends GraphBuilderTest<SimpleEdge<String
 		builder.addVertex(destination);
 		double weight = 2.0;
 		builder.addEdge(source, destination, weight);
-		Graph<String, SimpleEdge<String>> graph = builder.build();
+		SimpleGraph<String, SimpleEdge<String>> graph = builder.build();
 		assertTrue("Weighted Graph Builder. Can add a weighted edge between two existing vertices", graph.containsEdge(source, destination));
 		assertTrue("Weighted Graph Builder. Added weight is retained", graph.getEdge(source, destination).get().weight() == weight);
 	}

@@ -9,6 +9,15 @@ import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+/**
+ * A Simple Graph is a Graph that does not allow
+ * multiple edges between vertices and does not allow
+ * an edge to start and end on the same vertex (a loop).
+ * @author jakegreene
+ *
+ * @param <V> The vertex type
+ * @param <E> The edge type
+ */
 public class SimpleGraph<V, E extends Edge<V>> implements Graph<V, E> {
 	
 	private final ImmutableTable<V, V, E> edgeTable;
@@ -35,7 +44,6 @@ public class SimpleGraph<V, E extends Edge<V>> implements Graph<V, E> {
 		return edge.isPresent();
 	}
 
-	@Override
 	public Optional<E> getEdge(V source, V destination) {
 		E edge = edgeTable.get(source, destination);
 		if (edge == null) {
