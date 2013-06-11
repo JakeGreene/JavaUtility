@@ -2,6 +2,7 @@ package ca.jakegreene.util.graph;
 
 import java.util.Set;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Sets;
 import com.google.common.collect.Table;
@@ -88,19 +89,24 @@ public class SimpleEdgeStore<V, E extends Edge<V>> implements EdgeStore<V, E> {
 		 *  the definition of SimpleEdgeStore
 		 */
 		Set<E> foundEdges = Sets.newHashSet();
+		Optional<E> possibleEdge = getEdge(source, destination);
+		if (possibleEdge.isPresent()) {
+			foundEdges.add(possibleEdge.get());
+		}
+		return foundEdges;
+	}
+	
+	public Optional<E> getEdge(V source, V destination) {
 		E edge = edges.get(source, destination);
 		if (edge != null) {
-			foundEdges.add(edge);
-			return foundEdges;
+			return Optional.of(edge);
 		}
 		// The reverse edge (dest -> source) will be usable if it is bidirectional
 		E reverseEdge = edges.get(destination, source);
 		if (reverseEdge != null && reverseEdge.isBidirectional()) {
-			foundEdges.add(reverseEdge);
-			return foundEdges;
+			return Optional.of(reverseEdge);
 		}
-		// Found nothing, return empty Set
-		return foundEdges;
+		return Optional.absent();
 	}
 
 	@Override
@@ -109,5 +115,15 @@ public class SimpleEdgeStore<V, E extends Edge<V>> implements EdgeStore<V, E> {
 		 * definition of SimpleEdgeStore.
 		 */
 		return Sets.newHashSet(edges.values());
+	}
+
+	@Override
+	public Set<E> getOutgoingEdges(V source) {
+		return Sets.newHashSet(edges.row(source).values());
+	}
+
+	@Override
+	public Set<E> getIncomingEdges(V destination) {
+		return Sets.newHashSet(edges.column(destination).values());
 	}
 }

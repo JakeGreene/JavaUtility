@@ -52,6 +52,20 @@ public interface EdgeStore<V, E extends Edge<V>> {
 	public Collection<E> getEdges(V source, V destination);
 	
 	/**
+	 * Get all of the edges that allow travel from <code>source</code>
+	 * @param source
+	 * @return
+	 */
+	public Collection<E> getOutgoingEdges(V source);
+	
+	/**
+	 * Get all of the edges that allow travel to <code>destination</code>
+	 * @param destination
+	 * @return
+	 */
+	public Collection<E> getIncomingEdges(V destination);
+	
+	/**
 	 * Get all of the edges in this EdgeStore
 	 * @return
 	 */

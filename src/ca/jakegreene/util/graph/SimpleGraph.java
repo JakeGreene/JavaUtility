@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
@@ -19,11 +18,11 @@ import com.google.common.collect.Sets;
  */
 public class SimpleGraph<V, E extends Edge<V>> implements Graph<V, E> {
 	
-	private final ImmutableTable<V, V, E> edgeTable;
+	private final SimpleEdgeStore<V, E> edges;
 	private final Set<V> vertices;
 	
-	private SimpleGraph(ImmutableTable<V, V, E> edges, Set<V> vertices) {
-		edgeTable = edges;
+	private SimpleGraph(SimpleEdgeStore<V, E> edges, Set<V> vertices) {
+		this.edges = edges;
 		this.vertices = vertices;
 	}
 
@@ -34,7 +33,7 @@ public class SimpleGraph<V, E extends Edge<V>> implements Graph<V, E> {
 
 	@Override
 	public boolean containsEdge(E edge) {
-		return edgeTable.containsValue(edge);
+		return edges.contains(edge);
 	}
 
 	@Override
@@ -44,16 +43,7 @@ public class SimpleGraph<V, E extends Edge<V>> implements Graph<V, E> {
 	}
 
 	public Optional<E> getEdge(V source, V destination) {
-		E edge = edgeTable.get(source, destination);
-		if (edge == null) {
-			E reverseEdge = edgeTable.get(destination, source);
-			if (reverseEdge == null || !reverseEdge.isBidirectional()) {
-				return Optional.absent();
-			} else {
-				return Optional.of(reverseEdge);
-			}
-		}
-		return Optional.fromNullable(edge);
+		return edges.getEdge(source, destination);
 	}
 
 	@Override
@@ -88,11 +78,11 @@ public class SimpleGraph<V, E extends Edge<V>> implements Graph<V, E> {
 	}
 	
 	private Set<E> outgoingEdges(V vertex) {
-		return Sets.newHashSet(edgeTable.row(vertex).values());
+		return edges.getOutgoingEdges(vertex);
 	}
 	
 	private Set<E> incomingEdges(V vertex) {
-		return Sets.newHashSet(edgeTable.column(vertex).values());
+		return edges.getIncomingEdges(vertex);
 	}
 
 	@Override
@@ -102,7 +92,7 @@ public class SimpleGraph<V, E extends Edge<V>> implements Graph<V, E> {
 
 	@Override
 	public List<E> edges() {
-		return Lists.newArrayList(edgeTable.values());
+		return Lists.newArrayList(edges.getEdges());
 	}
 	
 	public static <V> Builder<V, SimpleEdge<V>> builder() {
@@ -132,11 +122,7 @@ public class SimpleGraph<V, E extends Edge<V>> implements Graph<V, E> {
 		}	
 		
 		public SimpleGraph<V, E> build() {
-			ImmutableTable.Builder<V, V, E> builder = ImmutableTable.builder();
-			for (E edge : store.getEdges()) {
-				builder.put(edge.source(), edge.destination(), edge);
-			}
-			return new SimpleGraph<V, E>(builder.build(), vertices);
+			return new SimpleGraph<V, E>((SimpleEdgeStore<V, E>)store, vertices);
 		}
 	}
 	
@@ -151,11 +137,7 @@ public class SimpleGraph<V, E extends Edge<V>> implements Graph<V, E> {
 		}
 		
 		public SimpleGraph<V, E> build() {
-			ImmutableTable.Builder<V, V, E> builder = ImmutableTable.builder();
-			for (E edge : store.getEdges()) {
-				builder.put(edge.source(), edge.destination(), edge);
-			}
-			return new SimpleGraph<V, E>(builder.build(), vertices);
+			return new SimpleGraph<V, E>((SimpleEdgeStore<V, E>)store, vertices);
 		}
 		
 	}
