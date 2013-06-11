@@ -1,6 +1,5 @@
 package ca.jakegreene.util.graph;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -122,83 +121,41 @@ public class SimpleGraph<V, E extends Edge<V>> implements Graph<V, E> {
 		return WeightedDirectedBuilder.startDirectedGraph();
 	}
 	
-	public static class Builder<V, E extends Edge<V>> implements GraphBuilder<V, E>{
-		
-		protected Set<E> edges;
-		protected Set<V> vertices;
-		protected final EdgeFactory<V, E> factory;
+	public static class Builder<V, E extends Edge<V>> extends AbstractGraphBuilder<V, E> {
 		
 		public Builder(EdgeFactory<V, E> factory) {
-			vertices = Sets.newHashSet();
-			edges = Sets.newHashSet();
-			this.factory = factory;
+			super(factory, new SimpleEdgeStore<V, E>());
 		}
 		
 		public static <V> Builder<V, SimpleEdge<V>> startGraph() {
 			return new Builder<V, SimpleEdge<V>>(new SimpleEdge.Factory<V>());
-		}
-		
-		@Override
-		public void addVertices(Iterable<V> vertices) {
-			addVertices(vertices.iterator());
-		}
-		
-		@Override
-		public void addVertices(Iterator<V> vertices) {
-			while (vertices.hasNext()) {
-				addVertex(vertices.next());
-			}
-		}
-		
-		@Override
-		public void addVertex(V vertex) {
-			vertices.add(vertex);
-		}
-		
-		/**
-		 * Add an edge between the source and destination.
-		 * The vertices will be added to the graph if they don't
-		 * already exist
-		 * @param source
-		 * @param destination
-		 */
-		@Override
-		public void addEdge(V source, V destination) throws EdgeLoopException {
-			if (source.equals(destination)) throw new EdgeLoopException();
-			vertices.add(source);
-			vertices.add(destination);
-			edges.add(factory.createEdge(source, destination));
-		}
-		
-		protected void addEdge(E edge) throws EdgeLoopException {
-			if (edge.source().equals(edge.destination())) throw new EdgeLoopException();
-			edges.add(edge);
-		}
+		}	
 		
 		public SimpleGraph<V, E> build() {
 			ImmutableTable.Builder<V, V, E> builder = ImmutableTable.builder();
-			for (E edge : edges) {
+			for (E edge : store.getEdges()) {
 				builder.put(edge.source(), edge.destination(), edge);
 			}
 			return new SimpleGraph<V, E>(builder.build(), vertices);
 		}
 	}
 	
-	public static class WeightedBuilder<V, E extends Edge<V>> extends Builder<V, E> implements WeightedGraphBuilder<V, E> {
+	public static class WeightedBuilder<V, E extends Edge<V>> extends AbstractWeightedGraphBuilder<V, E> {
 
 		public WeightedBuilder(EdgeFactory<V, E> factory) {
-			super(factory);
+			super(factory, new SimpleEdgeStore<V, E>());
 		}
 		
 		public static <V> WeightedBuilder<V, SimpleEdge<V>> startGraph() {
 			return new WeightedBuilder<V, SimpleEdge<V>>(new SimpleEdge.Factory<V>());
 		}
 		
-		@Override
-		public void addEdge(V source, V destination, double weight) {
-			addVertex(source);
-			addVertex(destination);
-			addEdge(factory.createEdge(source, destination, weight));
+		public SimpleGraph<V, E> build() {
+			ImmutableTable.Builder<V, V, E> builder = ImmutableTable.builder();
+			for (E edge : store.getEdges()) {
+				builder.put(edge.source(), edge.destination(), edge);
+			}
+			return new SimpleGraph<V, E>(builder.build(), vertices);
 		}
 		
 	}

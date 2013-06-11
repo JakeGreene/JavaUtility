@@ -10,14 +10,14 @@ import org.junit.Test;
 
 public abstract class GraphBuilderTest<E extends Edge<String>> {
 	
-	private SimpleGraph.Builder<String, E> builder;
+	private AbstractGraphBuilder<String, E> builder;
 	
 	@Before
 	public void setUp() throws Exception {
 		builder = createBuilder();
 	}
 	
-	protected abstract SimpleGraph.Builder<String, E> createBuilder();
+	protected abstract AbstractGraphBuilder<String, E> createBuilder();
 
 	@Test
 	public void testAddVertex() {
@@ -42,7 +42,7 @@ public abstract class GraphBuilderTest<E extends Edge<String>> {
 	public void testAddVerticeIterable() {
 		List<String> vertices = Arrays.asList(new String[]{"V1", "V2"});
 		builder.addVertices(vertices);
-		SimpleGraph<String, E> graph = builder.build();
+		Graph<String, E> graph = builder.build();
 		for (String vertex : vertices) {
 			assertTrue("Simple Graph Builder. Add an Iterable", graph.containsVertex(vertex));
 		}
@@ -52,7 +52,7 @@ public abstract class GraphBuilderTest<E extends Edge<String>> {
 	public void testAddVerticeIterator() {
 		List<String> vertices = Arrays.asList(new String[]{"V1", "V2"});
 		builder.addVertices(vertices.iterator());
-		SimpleGraph<String, E> graph = builder.build();
+		Graph<String, E> graph = builder.build();
 		for (String vertex : vertices) {
 			assertTrue("Simple Graph Builder. Add an Iterator", graph.containsVertex(vertex));
 		}
